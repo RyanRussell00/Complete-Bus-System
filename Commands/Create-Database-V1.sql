@@ -1,26 +1,24 @@
--- CREATE TABLE ADDRESS(
--- STREET varchar(20) not null,
--- CITY varchar (12) not null,
--- STATE char(2) not null,
--- ZIP char(5) not null,
--- primary key(STREET, CITY, STATE, ZIP)
--- );
--- 
--- CREATE TABLE FULL_NAME(
--- FIRST_NAME varchar(15),
--- MIDDLE_INITIAL char(2),
--- LAST_NAME varchar(15),
--- primary key (FIRST_NAME, MIDDLE_INITIAL, LAST_NAME)
+-- CREATE TABLE EMPLOYEE (
+--     ID INT(7) NOT NULL UNIQUE AUTO_INCREMENT,
+--     FIRST_NAME VARCHAR(15) NOT NULL,
+--     MID_INIT VARCHAR(2),
+--     LAST_NAME VARCHAR(15) NOT NULL,
+--     STREET VARCHAR(20) NOT NULL,
+--     CITY VARCHAR(12) NOT NULL,
+--     STATE CHAR(2) NOT NULL,
+--     ZIP CHAR(5) NOT NULL,
+--     SSN INT(9) NOT NULL UNIQUE,
+--     START_DATE DATE,
+--     SUPERVISOR INT(7),
+--     PRIMARY KEY (ID),
+--     KEY (SSN)
 -- );
 
-CREATE TABLE EMPLOYEE(
-ID	int(7) not null unique auto_increment,
-F_NAME varchar(40) not null,
-SSN int(9) not null unique,
-A_ADDRESS varchar(100) not null,
-START_DATE date,
-SUPERVISOR int(7),
-primary key(id)
--- constraint Name_Constraint foreign key (F_NAME) references FULL_NAME(FIRST_NAME, MIDDLE_INITIAL, LAST_NAME),
--- constraint Address_Constraint foreign key (A_ADDRESS) references ADDRESS(STREET, CITY, STATE, ZIP)
+CREATE TABLE BUS(
+	ID int(5) not null,
+    CAPACITY int(3) default 1,
+    START_DATE date,
+    DRIVER int(7) unique default null,
+    primary key (ID),
+    foreign key (DRIVER) references EMPLOYEE (ID)
 );
