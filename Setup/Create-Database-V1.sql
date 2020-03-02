@@ -22,8 +22,9 @@ CREATE TABLE EMPLOYEE (
     state char(2) NOT NULL,
     zip char(5) NOT NULL,
     start_date date,
-    supervisor int(7),
-    PRIMARY KEY (ssn)
+    supervisor int(9),
+    PRIMARY KEY (ssn),
+    FOREIGN KEY (supervisor) REFERENCES EMPLOYEE(ssn)
 );
 
 CREATE TABLE BUS (
