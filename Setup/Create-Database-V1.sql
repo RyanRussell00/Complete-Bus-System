@@ -31,7 +31,7 @@ CREATE TABLE BUS (
 	busId int(5) not null,
     capacity int(3) default 1,
     start_date date,
-    E_driver int(7) unique default null,
+    E_driver int(9) unique default null,
     PRIMARY KEY (busId),
     FOREIGN KEY (E_driver) REFERENCES EMPLOYEE(ssn)
 );
