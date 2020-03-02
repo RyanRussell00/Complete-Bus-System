@@ -97,4 +97,10 @@ VALUES(965874, 'Bothell to Everett', 123132, 654789);
 DELETE FROM VISITS;
 
 -- INSERT INTO VISITS
--- VALUES(123132, 'Bothell to Lynnwood', 
+-- VALUES(123132, 'Bothell to Lynnwood', 'stopid1', '16:30:10', '16:30:40');
+
+-- INSERT INTO VISITS
+-- VALUES(321321, 'Bothell to Lynnwood', 'stopid1', '16:30:10', '16:30:40');
+
+-- INSERT INTO VISITS
+-- VALUES(654789, 'Bothell to Lynnwood', 'stopid1', '16:30:10', '16:30:40');
