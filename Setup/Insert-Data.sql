@@ -1,10 +1,10 @@
 USE CBS; 
 
 -- Delete all data from EMPLOYEE before inserting
-DELETE FROM EMPLOYEE;
+-- DELETE FROM EMPLOYEE;
 
 INSERT INTO EMPLOYEE
-VALUES (123456789, 'Mason', 'G', 'Kim', 'Campus', 'Seattle', 'WA', '98195',  '2019-09-05', 111111111);
+VALUES (123456789, 'Mason', 'G', 'Kim', 'Campus', 'Seattle', 'WA', '98195',  '2019-09-05', 123456789);
 
 INSERT INTO EMPLOYEE
 VALUES (112233445, 'Jason', 'F', 'Dry', '18115 Campus Way NE', 'Bothell', 'WA', '98011',  '2019-12-20', 123456789);
@@ -13,7 +13,7 @@ INSERT INTO EMPLOYEE
 VALUES (111222333, 'Jeff', 'L', 'Mason', 'Make This St', 'Lynnwood', 'WA', '98087',  '2018-09-30', 123456789);
 
 -- Delete all data from BUS before inserting
-DELETE FROM BUS;
+-- DELETE FROM BUS;
 
 INSERT INTO BUS
 VALUES (11111, 60, '2020-01-01', 111222333);
@@ -22,7 +22,7 @@ INSERT INTO BUS
 VALUES (22222, 60, '2020-01-01', 112233445);
 
 -- Delete all data from FARE_TIER before inserting
-DELETE FROM FARE_TIER;
+-- DELETE FROM FARE_TIER;
 
 INSERT INTO FARE_TIER
 VALUES (1, 1, 'Veteran');
@@ -43,7 +43,7 @@ INSERT INTO FARE_TIER
 VALUES (6, 1, 'Senior');
 
 -- Delete all data from CARD before inserting
-DELETE FROM CARD;
+-- DELETE FROM CARD;
 
 INSERT INTO CARD
 VALUES(456789123, 99.99, '2022-09-20', 3); -- Some student
@@ -58,7 +58,7 @@ INSERT INTO CARD
 VALUES(321654987, 23.69, '2022-10-20', 4); -- Some Child
 
 -- Delete all data from TAPS before inserting
-DELETE FROM TAPS;
+-- DELETE FROM TAPS;
 
 INSERT INTO TAPS
 VALUES(11111, 321654987, '2020-06-20 15:20:39');
@@ -70,19 +70,19 @@ INSERT INTO TAPS
 VALUES(22222, 987654321, '2020-11-14 07:21:49');
 
 -- Delete all data from BUS_STOP before inserting
-DELETE FROM BUS_STOP;
+-- DELETE FROM BUS_STOP;
 
 INSERT INTO BUS_STOP
 VALUES(123132, 'UW Bothell', '110 Ave NE', 'Campus Way NE');
 
 INSERT INTO BUS_STOP
-VALUES(321321, 'Lynnwood Transit Center', '200th ST SW', '46th Ave W');
+VALUES(321321, 'Lynnwood Transit', '200th ST SW', '46th Ave W');
 
 INSERT INTO BUS_STOP
-VALUES(654789, 'South Everett Freeway Station', '112th St SE', 'South Everett St');
+VALUES(654789, 'South Everett', '112th St SE', 'South Everett St');
 
 -- Delete all data from ROUTE before inserting
-DELETE FROM ROUTE;
+-- DELETE FROM ROUTE;
 
 INSERT INTO ROUTE
 VALUES(159357, 'Bothell to Lynnwood', 123132, 321321);
@@ -94,13 +94,22 @@ INSERT INTO ROUTE
 VALUES(965874, 'Bothell to Everett', 123132, 654789);
 
 -- Delete all data from VISITS before inserting
-DELETE FROM VISITS;
+-- DELETE FROM VISITS;
 
--- INSERT INTO VISITS
--- VALUES(123132, 'Bothell to Lynnwood', 'stopid1', '16:30:10', '16:30:40');
+INSERT INTO VISITS
+VALUES(159357, 'Bothell to Lynnwood', 123132, '16:30:10', '16:30:40');
 
--- INSERT INTO VISITS
--- VALUES(321321, 'Bothell to Lynnwood', 'stopid1', '16:30:10', '16:30:40');
+INSERT INTO VISITS
+VALUES(357159, 'Lynnwood to Everett', 321321, '06:29:11', '06:29:38');
 
--- INSERT INTO VISITS
--- VALUES(654789, 'Bothell to Lynnwood', 'stopid1', '16:30:10', '16:30:40');
+INSERT INTO VISITS
+VALUES(965874, 'Bothell to Everett', 654789, '21:01:57', '21:01:57');
+
+-- Delete all data from SCHEDULED before inserting
+-- DELETE FROM SCHEDULED;
+
+INSERT INTO SCHEDULED
+VALUES(159357, 'Bothell to Lynnwood', 11111, '15:01:57', '21:01:57');
+
+INSERT INTO SCHEDULED
+VALUES(159357, 'Bothell to Lynnwood', 22222, '19:20:33', '20:08:57');
