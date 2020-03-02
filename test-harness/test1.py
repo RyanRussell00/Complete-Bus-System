@@ -3,50 +3,50 @@ import re;
 
 print("mysql-connector Found Successfuly");
 
-
-class Employee(object):
-    ssn = "";
-    Fname = "";
-    Minit = "";
-    Lname = "";
-    street = "";
-    city = "";
-    state = "";
-    zip = "";
-    start_date = "";
-    supervisor = "";
-
-    def __init__(self, ssn, Fname, Minit, Lname, street, city, state, zip, start_date, supervisor):
-        self.ssn = ssn;
-        self.Fname = Fname;
-        self.Minit = Minit;
-        self.Lname = Lname;
-        self.street = street;
-        self.city = city;
-        self.state = state;
-        self.zip = zip;
-        self.start_date = start_date;
-        self.supervisor = supervisor;
-
-
+#
+# class Employee(object):
+#     ssn = "";
+#     Fname = "";
+#     Minit = "";
+#     Lname = "";
+#     street = "";
+#     city = "";
+#     state = "";
+#     zip = "";
+#     start_date = "";
+#     supervisor = "";
+#
+#     def __init__(self, ssn, Fname, Minit, Lname, street, city, state, zip, start_date, supervisor):
+#         self.ssn = ssn;
+#         self.Fname = Fname;
+#         self.Minit = Minit;
+#         self.Lname = Lname;
+#         self.street = street;
+#         self.city = city;
+#         self.state = state;
+#         self.zip = zip;
+#         self.start_date = start_date;
+#         self.supervisor = supervisor;
+#
+#
 # Regex to get only the string with dashes, periods, and underscores
 def formatString(strIn):
     result = re.sub("[^a-zA-Z0-9_.-]*", "", str(strIn));
     return result;
-
-
-def printCommand():
-    for line in dbCursor:
-        print(line);
-
-
-def getEmployeeAsCommand(Emp):
-    command = str(Emp.ssn + ", " + Emp.Fname + ", " + Emp.Minit + ", " + Emp.Lname + ", " +
-                  Emp.street + ", " + Emp.city + ", " +
-                  Emp.state + ", " + Emp.zip + ", " + Emp.start_date + ", " + Emp.supervisor);
-
-    return command;
-
+#
+#
+# def printCommand():
+#     for line in dbCursor:
+#         print(line);
+#
+#
+# def getEmployeeAsCommand(Emp):
+#     command = str(Emp.ssn + ", " + Emp.Fname + ", " + Emp.Minit + ", " + Emp.Lname + ", " +
+#                   Emp.street + ", " + Emp.city + ", " +
+#                   Emp.state + ", " + Emp.zip + ", " + Emp.start_date + ", " + Emp.supervisor);
+#
+#     return command;
+#
 
 def testGetTables():
     dbCursor.execute("SHOW TABLES");
@@ -67,33 +67,31 @@ def testGetTables():
         return False
 
     return True;
-
-
-def testInsertEmployees():
-    Emp = Employee("123456789", "'Alex'", "'A'", "'Walt'", "'3234 Blade Road'",
-                   "'Seattle'", "'WA'", "'98036'", "'2001-05-22'", "NULL");
-
-    command = getEmployeeAsCommand(Emp);
-
-    dbCursor.execute("INSERT INTO EMPLOYEE VALUES(" + command + ")");
-
-    dbCursor.execute("SELECT * FROM EMPLOYEE");
-    printCommand();
+#
+#
+# def testInsertEmployees():
+#     Emp = Employee("123456789", "'Alex'", "'A'", "'Walt'", "'3234 Blade Road'",
+#                    "'Seattle'", "'WA'", "'98036'", "'2001-05-22'", "NULL");
+#
+#     command = getEmployeeAsCommand(Emp);
+#
+#     dbCursor.execute("INSERT INTO EMPLOYEE VALUES(" + command + ")");
+#
+#     dbCursor.execute("SELECT * FROM EMPLOYEE");
+#     printCommand();
 
 
 # Main
 mydb = mysql.connector.connect(
-    user='root',
-    password='root',
-    host='localhost',
+    user='ryanruss',
+    password='ryanruss2020',
+    host='complete-bus-system.cqbrsf1hvrmm.us-west-2.rds.amazonaws.com',
     database='CBS'
 );
 dbCursor = mydb.cursor();
 
-# Regex to ignore all non-alphabet characters
-
 print("Tables Exist: " + str(testGetTables()));
-
-testInsertEmployees();
+#
+# testInsertEmployees();
 
 mydb.close();
