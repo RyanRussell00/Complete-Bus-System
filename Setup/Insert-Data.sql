@@ -72,3 +72,29 @@ VALUES(22222, 987654321, '2020-11-14 07:21:49');
 -- Delete all data from BUS_STOP before inserting
 DELETE FROM BUS_STOP;
 
+INSERT INTO BUS_STOP
+VALUES(123132, 'UW Bothell', '110 Ave NE', 'Campus Way NE');
+
+INSERT INTO BUS_STOP
+VALUES(321321, 'Lynnwood Transit Center', '200th ST SW', '46th Ave W');
+
+INSERT INTO BUS_STOP
+VALUES(654789, 'South Everett Freeway Station', '112th St SE', 'South Everett St');
+
+-- Delete all data from ROUTE before inserting
+DELETE FROM ROUTE;
+
+INSERT INTO ROUTE
+VALUES(159357, 'Bothell to Lynnwood', 123132, 321321);
+
+INSERT INTO ROUTE
+VALUES(357159, 'Lynnwood to Everett', 321321, 654789);
+
+INSERT INTO ROUTE
+VALUES(965874, 'Bothell to Everett', 123132, 654789);
+
+-- Delete all data from VISITS before inserting
+DELETE FROM VISITS;
+
+-- INSERT INTO VISITS
+-- VALUES(123132, 'Bothell to Lynnwood', 
