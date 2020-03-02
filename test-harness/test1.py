@@ -4,35 +4,48 @@ import re;
 print("mysql-connector Found Successfuly");
 
 
-# class Employee(object):
-#     ssn = "";
-#     Fname = "";
-#     Minit = "";
-#     Lname = "";
-#     street = "";
-#     city = "";
-#     state = "";
-#     zip = "";
-#     start_date = "";
-#     supervisor = "";
-#
-#     def __init__(self, ssn, Fname, Minit, Lname, street, city, state, zip, start_date, supervisor):
-#         self.ssn = ssn;
-#         self.Fname = Fname;
-#         self.Minit = Minit;
-#         self.Lname = Lname;
-#         self.street = street;
-#         self.city = city;
-#         self.state = state;
-#         self.zip = zip;
-#         self.start_date = start_date;
-#         self.supervisor = supervisor;
+class Employee(object):
+    ssn = "";
+    Fname = "";
+    Minit = "";
+    Lname = "";
+    street = "";
+    city = "";
+    state = "";
+    zip = "";
+    start_date = "";
+    supervisor = "";
+
+    def __init__(self, ssn, Fname, Minit, Lname, street, city, state, zip, start_date, supervisor):
+        self.ssn = ssn;
+        self.Fname = Fname;
+        self.Minit = Minit;
+        self.Lname = Lname;
+        self.street = street;
+        self.city = city;
+        self.state = state;
+        self.zip = zip;
+        self.start_date = start_date;
+        self.supervisor = supervisor;
 
 
 # Regex to get only the string with dashes, periods, and underscores
 def formatString(strIn):
     result = re.sub("[^a-zA-Z0-9_.-]*", "", str(strIn));
     return result;
+
+
+def printCommand():
+    for line in dbCursor:
+        print(line);
+
+
+def getEmployeeAsCommand(Emp):
+    command = str(Emp.ssn + ", " + Emp.Fname + ", " + Emp.Minit + ", " + Emp.Lname + ", " +
+                  Emp.street + ", " + Emp.city + ", " +
+                  Emp.state + ", " + Emp.zip + ", " + Emp.start_date + ", " + Emp.supervisor);
+
+    return command;
 
 
 def testGetTables():
@@ -55,13 +68,17 @@ def testGetTables():
 
     return True;
 
-#
-# def testInsertEmployees():
-#     Emp = Employee("123456789", "Alex", "A", "Walt", "3234 Blade Road",
-#                   "Seattle", "WA", "98036", "05-22-2001");
-#
-#     dbCursor.execute("INSERT INTO TABLE EMPLOYEE VALUES (" + Emp.ssn + Emp.Fname + Emp.Minit + Emp.Lname +
-#                      Emp.street + Emp.city + Emp.state + Emp.zip + Emp.start_date + Emp.supervisor);
+
+def testInsertEmployees():
+    Emp = Employee("123456789", "'Alex'", "'A'", "'Walt'", "'3234 Blade Road'",
+                   "'Seattle'", "'WA'", "'98036'", "'2001-05-22'", "NULL");
+
+    command = getEmployeeAsCommand(Emp);
+
+    dbCursor.execute("INSERT INTO EMPLOYEE VALUES(" + command + ")");
+
+    dbCursor.execute("SELECT * FROM EMPLOYEE");
+    printCommand();
 
 
 # Main
@@ -77,6 +94,6 @@ dbCursor = mydb.cursor();
 
 print("Tables Exist: " + str(testGetTables()));
 
-# testInsertEmployees();
+testInsertEmployees();
 
 mydb.close();
