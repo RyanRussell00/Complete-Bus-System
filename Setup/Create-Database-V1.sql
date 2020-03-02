@@ -77,13 +77,14 @@ CREATE TABLE ROUTE(
 );
 CREATE TABLE VISITS(
 	R_routeId int(6) not null,
-	R_route_name VARCHAR(20),
-	S_stopId varchar(6) not null,
+	R_route_name VARCHAR(15),
+	S_stopId int(6) not null,
 	arrival_time TIME not null,
 	depart_time TIME not null,
 	PRIMARY KEY (R_routeId),
-	CONSTRAINT visit_route_id FOREIGN KEY (R_routeId) REFERENCES BUS_STOP(stopId),
-	CONSTRAINT visit_route_name FOREIGN KEY (R_route_name) REFERENCES BUS_STOP(stop_name)
+	CONSTRAINT visit_route_id FOREIGN KEY (R_routeId) REFERENCES ROUTE(routeId),
+	CONSTRAINT visit_route_name FOREIGN KEY (R_route_name) REFERENCES ROUTE(route_name),
+	CONSTRAINT visit_stop_id FOREIGN KEY (S_stopId) REFERENCES BUS_STOP(stopId)
 );
 CREATE TABLE SCHEDULED(
 	R_route_id int(6) not null,
