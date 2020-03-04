@@ -6,9 +6,6 @@ def printCommand():
     for line in dbCursor:
         print(line);
 
-
-
-
 def testGetTables():
     dbCursor.execute("SHOW TABLES");
     # add all tables to set to check if they exist later
