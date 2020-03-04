@@ -135,12 +135,42 @@ DELETE FROM TAPS;
 -- visits S_stopId goes back to S_stopId
 
 -- route S_first_stop goes back to S_stopId
+INSERT INTO BUS_STOP
+VALUES(780780, 'UW Bothell', '110 Ave NE', 'Campus Way NE');
+INSERT INTO ROUTE
+VALUES(159360, 'Lynnwood', 780780, 321321);
 
 -- route S_last_stop goes back to S_stopId
-
+INSERT INTO ROUTE
+VALUES(159359, 'Bellevue', 123132, 780780);
 -- scheduled R_route_id goes back to route routeId
 
+INSERT INTO BUS
+VALUES (22232, 60, '2020-03-03', 111222333);
+
+INSERT INTO SCHEDULED
+VALUES(159360, 'Lynnwood', 22232, '12:54:00', '12:55:00');
+
+
 -- scheduled R_route_name goes back to route route_name
+INSERT INTO SCHEDULED
+VALUES(357159, 'Everett', 22232, '12:54:00', '12:55:00');
 
--- B_busId goes back to bus busId
+SELECT 
+    *
+FROM
+    SCHEDULED
+WHERE
+    R_route_name = 'Lynnwood'
+        AND time_start >= '13:30:00';
 
+
+-- scheduled B_busId goes back to bus busId
+INSERT INTO SCHEDULED
+VALUES(357159, 'Everett', 22232, '12:57:00', '12:59:00');
+SELECT 
+    *
+FROM
+    SCHEDULED
+WHERE
+    B_busId = 22222;
