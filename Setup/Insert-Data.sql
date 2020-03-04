@@ -85,13 +85,13 @@ VALUES(654789, 'South Everett', '112th St SE', 'South Everett St');
 -- DELETE FROM ROUTE;
 
 INSERT INTO ROUTE
-VALUES(159357, 'Bothell to Lynnwood', 123132, 321321);
+VALUES(159357, 'Lynnwood', 123132, 321321);
 
 INSERT INTO ROUTE
-VALUES(357159, 'Lynnwood to Everett', 321321, 654789);
+VALUES(357159, 'Everett', 321321, 654789);
 
 INSERT INTO ROUTE
-VALUES(965874, 'Bothell to Everett', 123132, 654789);
+VALUES(965874, 'Bothell', 654789, 123132);
 
 -- Delete all data from VISITS before inserting
 -- DELETE FROM VISITS;
