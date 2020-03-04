@@ -1,31 +1,13 @@
 import mysql.connector;
 
+#Import for testing
+from FKTests import testAll
+
 print("mysql-connector Found Successfuly");
 
 def printCommand():
     for line in dbCursor:
         print(line);
-
-def testGetTables():
-    dbCursor.execute("SHOW TABLES");
-    # add all tables to set to check if they exist later
-    expectedTables = {"BUS", "BUS_STOP", "CARD", "EMPLOYEE", "FARE_TIER", "ROUTE", "SCHEDULED", "TAPS", "VISITS"};
-    count = 0;
-
-    for line in dbCursor:
-        line = '%s' % line;
-        # Testing
-        print(line);
-        if (line not in expectedTables):
-            print("Found Unexpected Table: " + str(line));
-            return False;
-        count += 1;
-
-    # If the total number of tables expected doesnt meet actual counted
-    if (count != len(expectedTables)):
-        return False
-
-    return True;
 
 # Create Database based on the file-
 def createDatabaseFromFile(path):
@@ -103,7 +85,8 @@ createDatabaseFromFile("../Setup/Create-Database-V1.sql");
 
 insertFromFile("../Setup/Inserts_V1.txt");
 
-# print("Tables Exist: " + str(testGetTables()));
+#Call test from testing file
+testAll();
 
 mydb.close();
 # --- End of Main ---
