@@ -93,7 +93,7 @@ CREATE TABLE SCHEDULED(
     time_start TIME,
     time_end TIME,
     PRIMARY KEY (R_route_id, R_route_name, B_busId, time_start),
-	FOREIGN KEY (R_route_id) REFERENCES ROUTE(routeId),
-	FOREIGN KEY (R_route_name) REFERENCES ROUTE(route_name),
-	FOREIGN KEY (B_busId) REFERENCES BUS(busId)
+	CONSTRAINT scheduled_route_id FOREIGN KEY (R_route_id) REFERENCES ROUTE(routeId),
+	CONSTRAINT scheduled_route_name FOREIGN KEY (R_route_name) REFERENCES ROUTE(route_name),
+	CONSTRAINT scheduled_bus_id FOREIGN KEY (B_busId) REFERENCES BUS(busId)
 );
