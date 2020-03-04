@@ -27,29 +27,6 @@ def testGetTables():
 
     return True;
 
-
-#
-
-# def testInsertEmployees():
-#     Emp = Employee("123456789", "'Alex'", "'A'", "'Walt'", "'3234 Blade Road'",
-#                    "'Seattle'", "'WA'", "'98036'", "'2001-05-22'", "NULL");
-#
-#     command = getEmployeeAsCommand(Emp);
-#
-#     dbCursor.execute("INSERT INTO EMPLOYEE VALUES(" + command + ")");
-#
-#     dbCursor.execute("SELECT * FROM EMPLOYEE");
-#     printCommand();
-
-
-# Main
-# mydb = mysql.connector.connect(
-#     user='ryanruss',
-#     password='ryanruss2020',
-#     host='complete-bus-system.cqbrsf1hvrmm.us-west-2.rds.amazonaws.com',
-#     database='CBS'
-# );
-
 # Create Database based on the file-
 def createDatabaseFromFile(path):
     # open file as read only
@@ -70,9 +47,6 @@ def createDatabaseFromFile(path):
 
     file.close();
     print("Finished Creating Database");
-
-
-# ---
 
 def insertFromFile(path):
     # open file as read only
@@ -115,7 +89,7 @@ def insertFromFile(path):
     print("Finished Inserting Into Database");
 
 
-# Main
+# --- Start of Main ---
 mydb = mysql.connector.connect(
     user='root',
     password='root',
@@ -132,6 +106,7 @@ insertFromFile("../Setup/Inserts_V1.txt");
 # print("Tables Exist: " + str(testGetTables()));
 
 mydb.close();
+# --- End of Main ---
 
 #Old Code
 
