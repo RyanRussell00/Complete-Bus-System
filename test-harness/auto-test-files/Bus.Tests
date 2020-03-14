@@ -6,3 +6,4 @@
 # The query will expect the output at the same position in the expected file.
 #   For example: The 3rd query in this file will expect the 3rd line in the 'Expected' file to be its output.
 
+SELECT * FROM BUS WHERE start_date = '2020-01-01';
