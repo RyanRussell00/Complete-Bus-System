@@ -1,5 +1,5 @@
 # PLEASE READ:
-# DO NOT CHANGE THE NAME OF THIS FILE. Query files must end in Tests.txt and Expected files must end in Expected.txt
+# DO NOT CHANGE THE NAME OF THIS FILE. Query files must end in .Tests and Expected files must end in .Expected
 # Type output EXACTLY as you'd see it on output. No semicolons, no quotes (unless expected),  etc.
 # Multi-line outputs ARE NOT ALLOWED. ALL OUTPUTS MUST BE ONE 1 LINE NO MATTER HOW LONG.
 # ONLY USE # or -- FOR COMMENTS.

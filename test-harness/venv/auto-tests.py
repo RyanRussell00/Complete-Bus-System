@@ -90,13 +90,13 @@ def TestCommands(expectedFile, queriesFile):
 
 
 # Imports all the testing files from the given directory.
-# Files must end in 'Expected.txt' or 'Tests.txt' and the prefix must be identical.
+# Files must end in '.Expected' or '.Tests' and the prefix must be identical.
 def RunAllAutoTests(dir):
     files = [];
     # Get all files from the directory
     for file in os.listdir(dir):
         # If files match what we are looking for
-        if (fnmatch.fnmatch(file, "*Expected.txt") or fnmatch.fnmatch(file, "*Tests.txt")):
+        if (fnmatch.fnmatch(file, "*.Expected") or fnmatch.fnmatch(file, "*.Tests")):
             file = file.strip();
             # If file path isn't empty
             if (file):
