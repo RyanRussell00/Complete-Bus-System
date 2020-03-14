@@ -4,7 +4,7 @@ USE CBS;
 -- DELETE FROM EMPLOYEE;
 
 INSERT INTO EMPLOYEE (ssn, Fname, Minit, Lname, startDate, supervisor)
-VALUES (123456789, 'Mason', 'G', 'Kim','2019-09-05', 123456789);
+VALUES (123456789, 'Mason', 'G', 'Kim','2019-09-05', NULL);
 
 INSERT INTO EMPLOYEE (ssn, Fname, Minit, Lname, startDate, supervisor)
 VALUES (112233445, 'Jason', 'F', 'Dry', '2019-12-20', 123456789);
