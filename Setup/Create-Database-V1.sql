@@ -18,7 +18,7 @@ CREATE TABLE EMPLOYEE (
     Fname VARCHAR(15) NOT NULL,
     Minit VARCHAR(2),
     Lname VARCHAR(15) NOT NULL,
-    start_date DATE,
+    startDate DATE,
     supervisor INT(9),
     PRIMARY KEY (ssn),
     FOREIGN KEY (supervisor)
@@ -37,11 +37,12 @@ CREATE TABLE ADDRESS (
 );
 
 CREATE TABLE BUS (
-    busId INT(5) NOT NULL,
+    busID INT(5) NOT NULL,
+    busName VARCHAR(20) NOT NULL,
     capacity INT(3) DEFAULT 1,
     manufactured_date DATE,
     E_driver INT(9) UNIQUE DEFAULT NULL,
-    PRIMARY KEY (busId),
+    PRIMARY KEY (busID),
     FOREIGN KEY (E_driver)
         REFERENCES EMPLOYEE (ssn)
 );
@@ -61,12 +62,12 @@ CREATE TABLE CARD (
         REFERENCES FARE_TIER (tier)
 );
 CREATE TABLE TAPS (
-    B_busId INT(5) NOT NULL,
+    B_busID INT(5) NOT NULL,
     C_cardNum INT(9) NOT NULL,
     time_stamp DATETIME NOT NULL,
-    PRIMARY KEY (B_busId , C_cardNum , time_stamp),
-    CONSTRAINT tap_bus FOREIGN KEY (B_busId)
-        REFERENCES BUS (busId),
+    PRIMARY KEY (B_busID , C_cardNum , time_stamp),
+    CONSTRAINT tap_bus FOREIGN KEY (B_busID)
+        REFERENCES BUS (busID),
     CONSTRAINT tap_card FOREIGN KEY (C_cardNum)
         REFERENCES CARD (cardNum)
 );
