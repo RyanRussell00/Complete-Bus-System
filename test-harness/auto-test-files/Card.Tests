@@ -5,4 +5,3 @@
 # ONLY USE # or -- FOR COMMENTS.
 # The queries will expect the output at the same position in the expected file. (line numbers dont matter)
 #   For example: The 3rd query in the queries file will expect the 3rd line in this file to be its output.
-
