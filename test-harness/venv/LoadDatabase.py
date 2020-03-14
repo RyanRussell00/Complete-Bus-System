@@ -81,9 +81,9 @@ mydb = mysql.connector.connect(
 dbCursor = mydb.cursor();
 
 # Create original DB
-createDatabaseFromFile("../Setup/Create-Database-V1.sql");
+createDatabaseFromFile("../../Setup/Create-Database-V1.sql");
 
-insertFromFile("../Setup/Inserts_V1.txt");
+insertFromFile("../../Setup/Inserts_V1.txt");
 
 #Call test from testing file
 testAll();

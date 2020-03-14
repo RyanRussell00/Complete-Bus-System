@@ -1,0 +1,8 @@
+# PLEASE READ:
+# DO NOT CHANGE THE NAME OF THIS FILE. Query files must end in Tests.txt and Expected files must end in Expected.txt
+# Type output EXACTLY as you'd see it on output. No semicolons, no quotes (unless expected),  etc.
+# Multi-line outputs ARE NOT ALLOWED. ALL OUTPUTS MUST BE ONE 1 LINE NO MATTER HOW LONG.
+# ONLY USE # or -- FOR COMMENTS.
+# The queries will expect the output at the same position in the expected file. (line numbers dont matter)
+#   For example: The 3rd query in the queries file will expect the 3rd line in this file to be its output.
+
