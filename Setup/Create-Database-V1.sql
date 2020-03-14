@@ -3,6 +3,7 @@ create database CBS;
 use CBS;
 
 DROP TABLE IF EXISTS EMPLOYEE;
+DROP TABLE IF EXISTS ADDRESS;
 DROP TABLE IF EXISTS BUS;
 DROP TABLE IF EXISTS CARD;
 DROP TABLE IF EXISTS TAPS;
@@ -13,87 +14,98 @@ DROP TABLE IF EXISTS VISITS;
 DROP TABLE IF EXISTS SCHEDULED;
 
 CREATE TABLE EMPLOYEE (
-	ssn int(9) NOT NULL UNIQUE,
-    Fname varchar(15) NOT NULL,
-    Minit varchar(2),
-    Lname varchar(15) NOT NULL,
-    street varchar(20) NOT NULL,
-    city varchar(12) NOT NULL,
-    state char(2) NOT NULL,
-    zip char(5) NOT NULL,
-    start_date date,
-    supervisor int(9),
+    ssn INT(9) NOT NULL UNIQUE,
+    Fname VARCHAR(15) NOT NULL,
+    Minit VARCHAR(2),
+    Lname VARCHAR(15) NOT NULL,
+    start_date DATE,
+    supervisor INT(9),
     PRIMARY KEY (ssn),
-    FOREIGN KEY (supervisor) REFERENCES EMPLOYEE(ssn)
+    FOREIGN KEY (supervisor)
+        REFERENCES EMPLOYEE (ssn)
+);
+
+CREATE TABLE ADDRESS (
+    S_ssn INT(9) NOT NULL UNIQUE,
+    street VARCHAR(20) NOT NULL,
+    city VARCHAR(12) NOT NULL,
+    state CHAR(2) NOT NULL,
+    zip CHAR(5) NOT NULL,
+    PRIMARY KEY (S_ssn),
+    CONSTRAINT address_ssn FOREIGN KEY (S_ssn)
+        REFERENCES EMPLOYEE (ssn)
 );
 
 CREATE TABLE BUS (
-	busId int(5) not null,
-    capacity int(3) default 1,
-    start_date date,
-    E_driver int(9) unique default null,
+    busId INT(5) NOT NULL,
+    capacity INT(3) DEFAULT 1,
+    manufactured_date DATE,
+    E_driver INT(9) UNIQUE DEFAULT NULL,
     PRIMARY KEY (busId),
-    FOREIGN KEY (E_driver) REFERENCES EMPLOYEE(ssn)
+    FOREIGN KEY (E_driver)
+        REFERENCES EMPLOYEE (ssn)
 );
 CREATE TABLE FARE_TIER (
-	tier int(2) not null,
-	cost float(4, 2) not null,
-	fare_name varchar(9) default NULL,
-	PRIMARY KEY (tier)
+    tier INT(2) NOT NULL,
+    cost FLOAT(4 , 2 ) NOT NULL,
+    fareName VARCHAR(9) DEFAULT NULL,
+    PRIMARY KEY (tier)
 );
 CREATE TABLE CARD (
-	card_number int(9) not null,
-	balance float(4, 2) default 0,
-	expiry_date DATE,
-	F_fare int(2) not null, 
-	PRIMARY KEY (card_number),
-	CONSTRAINT card_fare FOREIGN KEY (F_fare) REFERENCES FARE_TIER(tier)
+    cardNum INT(9) NOT NULL,
+    balance FLOAT(4 , 2 ) DEFAULT 0,
+    expiry_date DATE,
+    F_fare INT(2) NOT NULL,
+    PRIMARY KEY (cardNum),
+    CONSTRAINT card_fare FOREIGN KEY (F_fare)
+        REFERENCES FARE_TIER (tier)
 );
 CREATE TABLE TAPS (
-	B_busId int(5) not null,
-	C_card_num int(9) not null,
-	time_stamp DATETIME not null,
-	PRIMARY KEY (B_busId, C_card_num, time_stamp),
-	CONSTRAINT tap_bus FOREIGN KEY (B_busId) REFERENCES BUS(busId),
-	CONSTRAINT tap_card FOREIGN KEY (C_card_num) REFERENCES CARD(card_number)
+    B_busId INT(5) NOT NULL,
+    C_cardNum INT(9) NOT NULL,
+    time_stamp DATETIME NOT NULL,
+    PRIMARY KEY (B_busId , C_cardNum , time_stamp),
+    CONSTRAINT tap_bus FOREIGN KEY (B_busId)
+        REFERENCES BUS (busId),
+    CONSTRAINT tap_card FOREIGN KEY (C_cardNum)
+        REFERENCES CARD (cardNum)
 );
-CREATE TABLE BUS_STOP(
-	stopId int(6) not null,
-	stop_name varchar(20) not NULL,
-	street1 varchar(20) not null,
-	street2 varchar(20) default NULL,
-	PRIMARY KEY (stopId),
-	KEY(stop_name)
+CREATE TABLE BUS_STOP (
+    stopID INT(6) NOT NULL,
+    stopName VARCHAR(20) NOT NULL,
+    street1 VARCHAR(20) NOT NULL,
+    street2 VARCHAR(20) DEFAULT NULL,
+    PRIMARY KEY (stopID)
 );
-CREATE TABLE ROUTE(
-	routeId int(6) not null,
-	route_name VARCHAR(25),
-	S_first_stopId int(6) not null,
-	S_last_stopId int(6) not null,
-	PRIMARY KEY (routeId),
-	KEY(route_name),
-	CONSTRAINT first_stop FOREIGN KEY (S_first_stopId) REFERENCES BUS_STOP(stopId),
-	CONSTRAINT last_stop FOREIGN KEY (S_last_stopId) REFERENCES BUS_STOP(stopId)
+CREATE TABLE ROUTE (
+    routeID INT(6) NOT NULL,
+    S_firstStop INT(6) NOT NULL,
+    S_lastStop INT(6) NOT NULL,
+    PRIMARY KEY (routeID),
+    CONSTRAINT route_firstStop FOREIGN KEY (S_firstStop)
+        REFERENCES BUS_STOP (stopId),
+    CONSTRAINT route_lastStop FOREIGN KEY (S_lastStop)
+        REFERENCES BUS_STOP (stopId)
 );
-CREATE TABLE VISITS(
-	R_routeId int(6) not null,
-	R_route_name VARCHAR(25),
-	S_stopId int(6) not null,
-	arrival_time TIME not null,
-	depart_time TIME not null,
-	PRIMARY KEY (R_routeId),
-	CONSTRAINT visit_route_id FOREIGN KEY (R_routeId) REFERENCES ROUTE(routeId),
-	CONSTRAINT visit_route_name FOREIGN KEY (R_route_name) REFERENCES ROUTE(route_name),
-	CONSTRAINT visit_stop_id FOREIGN KEY (S_stopId) REFERENCES BUS_STOP(stopId)
+CREATE TABLE VISITS (
+    R_routeID INT(6) NOT NULL,
+    S_stopID INT(6) NOT NULL,
+    arrivalTime TIME NOT NULL,
+    departTime TIME NOT NULL,
+    PRIMARY KEY (R_routeID),
+    CONSTRAINT visit_routeID FOREIGN KEY (R_routeID)
+        REFERENCES ROUTE (routeID),
+    CONSTRAINT visit_stopID FOREIGN KEY (S_stopID)
+        REFERENCES BUS_STOP (stopID)
 );
-CREATE TABLE SCHEDULED(
-	R_route_id int(6) not null,
-	R_route_name VARCHAR(25) NOT NULL,
-    B_busId INT(5),
-    time_start TIME,
-    time_end TIME,
-    PRIMARY KEY (R_route_id, R_route_name, B_busId, time_start),
-	CONSTRAINT scheduled_route_id FOREIGN KEY (R_route_id) REFERENCES ROUTE(routeId),
-	CONSTRAINT scheduled_route_name FOREIGN KEY (R_route_name) REFERENCES ROUTE(route_name),
-	CONSTRAINT scheduled_bus_id FOREIGN KEY (B_busId) REFERENCES BUS(busId)
+CREATE TABLE SCHEDULED (
+    R_routeID INT(6) NOT NULL,
+    B_busID INT(5),
+    timeStart TIME,
+    timeEnd TIME,
+    PRIMARY KEY (R_routeID , B_busID),
+    CONSTRAINT scheduled_routeID FOREIGN KEY (R_routeID)
+        REFERENCES ROUTE (routeID),
+    CONSTRAINT scheduled_busID FOREIGN KEY (B_busID)
+        REFERENCES BUS (busID)
 );
