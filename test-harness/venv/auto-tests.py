@@ -118,20 +118,80 @@ def RunAllAutoTests(dir):
         TestCommands(f, n);
 
 
-def main():
-    # Connect to the DB
-    mydb = mysql.connector.connect(
-        user='root',
-        password='root',
-        host='localhost',
-        database='CBS'
-    );
-    # Cursor to run commands on the DB
-    global dbCursor;
-    dbCursor = mydb.cursor();
-    assert (dbCursor is not None), "auto-tests: Database connection is null";
+# This function allows to run tests again without having to restart the entire program.
+def RefreshTests():
+    refresh = "Y";
+    while (refresh.upper() == "Y"):
+        refresh = input("Refresh Testing Files? Y/N: ");
+        RunAllAutoTests("../auto-test-files");
 
-    RunAllAutoTests("../auto-test-files");
+
+# Gets the database login information from the user and starts the DB connection
+def StartDBConnection():
+    user = "";
+    password = "";
+    host = "";
+    databaseName = "";
+
+    print("This version of the tests only work on local MySQL and require you to have the database already created");
+    confirm = input("I have the database created on my local MySQL: Y/N: ");
+    if (confirm.upper() != 'Y'):
+        print("Please create the database on your local MySQL and run the program again.")
+        exit(1);
+
+    while (user == ""):
+        user = input("Please enter the username to your local MySQL database: ");
+        print("You entered: " + user);
+
+    while (password == ""):
+        password = input("Please enter the password to your local MySQL database: ");
+        print("You entered: " + password);
+
+    while (host == ""):
+        host = input("Please enter the host to your local MySQL database (commonly `localhost`): ");
+        print("You entered: " + host);
+
+    while (databaseName == ""):
+        databaseName = input("Please enter the name of the database you want to use (commonly CBS): ");
+        print("You entered: " + databaseName);
+
+    try:
+        global mydb;
+        mydb = mysql.connector.connect(
+            user=user,
+            password=password,
+            host=host,
+            database=databaseName
+        );
+        global dbCursor;
+        dbCursor = mydb.cursor();
+        assert (dbCursor is not None), "auto-tests: Database connection is null";
+        RefreshTests();
+    except mysql.connector.errors.DatabaseError as db:
+        print("Error connecting to database. Please View The Error Message and Try Again.");
+        print(db);
+        StartDBConnection();
+
+
+def main():
+    # global mydb;
+    # global dbCursor;
+
+    StartDBConnection();
+
+    # Connect to the DB
+    # mydb = mysql.connector.connect(
+    #     user='root',
+    #     password='root',
+    #     host='localhost',
+    #     database='CBS'
+    # );
+    # # Cursor to run commands on the DB
+    # global dbCursor;
+    # dbCursor = mydb.cursor();
+    # assert (dbCursor is not None), "auto-tests: Database connection is null";
+
+    # RunAllAutoTests("../auto-test-files");
 
     # TestCommands("../auto-test-files/EmployeeTests.txt", "../auto-test-files/EmployeeExpected.txt");
 
