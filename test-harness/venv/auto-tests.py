@@ -16,7 +16,11 @@ def SeperatingLine():
 # Regex to get only the string with dashes, periods, and underscores
 def clean(strIn):
     result = re.sub("[^a-zA-Z0-9,_'.-]*", "", str(strIn));
-    return result.strip();
+    result = result.strip();
+    if (result.endswith(',')):
+        result = result[:-1];
+        # print("removed comma: " + result);
+    return result;
 
 
 def readFromFile(path, commands):
@@ -75,8 +79,8 @@ def TablesExist():
         line = '%s' % line;
         if (line not in expectedTables):
             print("Found Unexpected Table: " + str(line));
-            return False;
             SeperatingLine();
+            return False;
         count += 1;
 
     # If the total number of tables expected doesnt meet actual counted
@@ -96,7 +100,7 @@ def TestCommands(expectedFile, queriesFile):
     queries = readFromFile(queriesFile, True);
     # queries = readFromFile("../auto-test-files/Employee.Tests", True);
 
-    if (expected is not None or queries is not None):
+    if (expected is None or queries is None):
         print("Failed to read expected outputs or queries commands");
         SeperatingLine();
         return False;
@@ -132,6 +136,9 @@ def TestCommands(expectedFile, queriesFile):
             actual = clean(line);
             expct = clean(expected[eCount]);
 
+            # print("Actual: " + actual);
+            # print("Expected: " + expct);
+
             if (actual != expct):
                 print("Actual and Expected dont match.");
                 print("Actual: " + actual);
@@ -165,7 +172,7 @@ def RunAllAutoTests(dir):
                 files.append(dir + "/" + file);
 
     # Ensure that there are an even number of files
-    if (len(files) % 2 == 0):
+    if (len(files) % 2 != 0):
         print("Every test file must have a matching expected file. ");
         print("Ensure the files exist and are named properly.");
         print("Files must end in 'Expected.txt' or 'Tests.txt' and the prefix must be identical.");

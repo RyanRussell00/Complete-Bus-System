@@ -13,6 +13,5 @@
 # DateTime: USE THIS FORMAT EXACTLY: datetime.date(YYYY, (M)M, (D)D) #Do not put 0 in front of single digit Month or Day
 # Parentheses around expected output is optional
 
-111222333, 'Jeff', 'L', 'Mason', 'Make This St', 'Lynnwood', 'WA', '98087', datetime.date(2018, 9, 30), 123456789
-112233445, 'Jason', 'F', 'Dry', '18115 Campus Way NE', 'Bothell', 'WA', '98011', datetime.date(2019, 12, 20), 123456789
-(123456789, 'Mason', 'G', 'Kim', 'Campus', 'Seattle', 'WA', '98195', datetime.date(2019, 9, 5), 123456789)
+123456789, 'Joe', '', 'Swanson', datetime.date(2020, 2, 4), None
+123456789
