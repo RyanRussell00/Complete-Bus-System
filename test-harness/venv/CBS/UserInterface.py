@@ -12,8 +12,8 @@ def SeparatingLine():
     print("-------------------------------------------------------------");
 
 
-# Gets all stops on a busses route on a given date
-# Use Case: I want to know at what time the X-Bus will be at each of its stops on March 15 2020
+# Gets all stops on a bus's route on a given date
+# Use Case: I want to know at what time the 535 Lynnwood will be at each of its stops on March 15 2020
 # This function is left in this file because it's used by both Employees and Passengers
 # ToDo: This entire function once we have finalized the creates.
 # ToDo: Test this function
