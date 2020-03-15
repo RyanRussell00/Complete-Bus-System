@@ -93,7 +93,7 @@ CREATE TABLE VISITS (
     S_stopID INT(6) NOT NULL,
     arrivalTime TIME NOT NULL,
     departTime TIME NOT NULL,
-    PRIMARY KEY (R_routeID),
+    PRIMARY KEY (R_routeID, S_stopID),
     CONSTRAINT visit_routeID FOREIGN KEY (R_routeID)
         REFERENCES ROUTE (routeID) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT visit_stopID FOREIGN KEY (S_stopID)
