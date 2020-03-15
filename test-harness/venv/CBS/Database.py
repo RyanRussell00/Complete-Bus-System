@@ -58,12 +58,14 @@ def GetDBCursor():
 
 # Regex to get only the string with dashes, periods, and underscores
 def clean(strIn):
-    result = re.sub("[^a-zA-Z0-9,\s*=-]*", "", str(strIn));
+    result = re.sub("[^a-zA-Z0-9(),'\s*=-]*", "", str(strIn));
     result = result.strip();
     return result;
 
 
 def Sanitize(line):
+    if (line.strip() == ""):
+        return "";
     line = clean(line);
     print("Cleaned: " + line);
     if (";" in line or "DELETE" in line or "DROP" in line):
@@ -83,6 +85,23 @@ def SubmitQuery(query):
     for line in dbCursor:
         result.append(clean(line));
     return result;
+
+
+def SubmitInsert(insert):
+    insert = Sanitize(insert);
+    if (insert == ""):
+        return False;
+    print("Inserting:");
+    print(insert);
+    try:
+        dbCursor.execute(insert + ";");
+        mydb.commit();
+    except Exception as e:
+        print("Failed trying to insert, see error message:");
+        print(e);
+        return False;
+
+    return True;
 
 #
 # def ConnectDatabase():
