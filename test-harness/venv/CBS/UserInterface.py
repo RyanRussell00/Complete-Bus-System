@@ -1,12 +1,16 @@
 import re;
 
 from Database import StartDBConnection, CloseConnection, SubmitQuery, SubmitInsert, Sanitize
+from datetime import datetime, timedelta, date
 
 # ToDo: Separate the ac
 
 # Ending semicolons intentionally left out because the sanitize function removes all semicolons
 SELECT_QUERY = "SELECT %s FROM %s WHERE %s"
-NEW_EMPLOYEE_QUERY = "INSERT INTO EMPLOYEE (ssn, Fname, Minit, Lname, startDate, supervisor) VALUES (%s, '%s', '%s', '%s','%s', %s)"
+SELECT_ALL_QUERY = "SELECT %s FROM %s"
+NEW_EMPLOYEE_INSERT = "INSERT INTO EMPLOYEE (ssn, Fname, Minit, Lname, startDate, supervisor) VALUES (%s, '%s', '%s', '%s','%s', %s)"
+SELECT_EMPL_ROUTE_QUERY = "SELECT %s FROM %s WHERE %s IN (SELECT %s FROM %s WHERE %s)"
+SELECT_EMPL_SCHEDULE = "SELECT %s FROM %s WHERE % (SELECT %s FROM %s WHERE %s)"
 
 
 # Separating line purely for display purposes
@@ -77,16 +81,16 @@ def EmployeeQueries():
         choice = input("Please enter a command: ");
 
     query = "";
-    if (selection == "I"):
-        # ToDo a query that gets all information of the employee including their address
-        query = "";
-    elif (selection == "B"):
-        # ToDo a query that gets all busses that employee is assigned to
-        query = "";
-    elif (selection == "R"):
-        # ToDo gets all routes and times that employee is driving. Maybe a limited time frame?
-        query = "";
-    elif (selection == "X"):
+    if (choice == "I"):
+        # ToDo a query that gets all information of the employee including their address (added)
+        query = SELECT_ALL_QUERY % ("*", "EMPLOYEE");
+    elif (choice == "B"):
+        # ToDo a query that gets all busses that employee is assigned to (added)
+        query = SELECT_QUERY % ("busID, busName", "BUS", "E_driver = " + ssn);
+    elif (choice == "R"):
+        # ToDo gets all routes and times that employee is driving. Maybe a limited time frame? (added)
+        query = SELECT_EMPL_ROUTE_QUERY % ("R_routeID, timeStart, timeEnd", "SCHEDULED", "B_busID", "busID", "BUS", "E_driver = " + ssn);
+    elif (choice == "X"):
         EndProgram();
 
     result = SubmitQuery(query);
@@ -122,23 +126,32 @@ def NewEmployee():
             if (entry.upper() == "X"):
                 EndProgram();
             # Ensure the start date follows proper date-time format
-            # ToDo: Find somehow to make sure the date is valid (ie not 100 years in the future)
+            # ToDo: date is no more than 30 days from today (fixed)
             if (key == "Start Date (YYYY-MM-DD)"):
                 print("datetime: " + entry);
                 r = re.compile('[0-9]{4}-[0-9]{2}-[0-9]{2}');
                 if r.match(entry) is None:
                     print(entry + "Didn't match datetime");
                     entry = "";
+                dateObj = datetime.strptime(entry, '%Y-%m-%d').date();
+                if dateObj - date.today() > timedelta(days = 30):
+                    print("Date must be no more than 30 days from today");
+                    entry = "";
             # Make sure the SSN and Super-SSN can be integers.
-            # ToDo: Add case where supervisor's SSN is null
+            # ToDo: Add case where supervisor's SSN is null (fixed)
             if (key == "Social Security Number" or key == "Supervisor SSN"):
-                if (len(entry) == 9):
+                if (entry != "NULL" and entry != "null"):
                     try:
                         int(entry);
+                        if (len(entry) != 9):
+                            entry = "";
                     except ValueError:
                         entry = "";
                 else:
-                    entry = "";
+                    if (key == "Supervisor SSN"):
+                        entry = "NULL";
+                    else:
+                        entry = "";
             # ToDo: Make sure middle initial is only 1 character
             if (key == "Middle Initial" and len(entry) > 1 and entry != "NULL"):
                 entry = ""
@@ -152,7 +165,7 @@ def NewEmployee():
     if (len(allValues) != 6):
         print("Something went wrong with the new Employee's data");
         return False;
-    query = (NEW_EMPLOYEE_QUERY % (allValues[0], allValues[1], allValues[2], allValues[3], allValues[4], allValues[5]));
+    query = (NEW_EMPLOYEE_INSERT % (allValues[0], allValues[1], allValues[2], allValues[3], allValues[4], allValues[5]));
     print(query);
 
     result = SubmitInsert(query);
@@ -160,6 +173,35 @@ def NewEmployee():
     if (result is False):
         print("Error Submitting Query.");
         return False;
+    return True;
+
+def CheckSchedule():
+    SeparatingLine();
+    # ToDo: Queries for checking employees schedule
+    print("Please fill out the Employee's information.\n"
+          "Enter 'X' at any time to exit the program.")
+    entry = input("Employee SSN:");
+    entry = entry.strip();
+    if (entry.upper() == "X"):
+        EndProgram();
+    if (len(entry) == 9):
+        try:
+            int(entry);
+        except ValueError:
+            entry = "";
+    else:
+        entry = "";
+    query = SELECT_EMPL_SCHEDULE % ("timeStart, timeEnd", "SCHEDULED", "B_busID = ", "busID", "BUS", "E_driver = " + entry);
+    result = SubmitQuery(query);
+    if (result is False):
+        print("Error Submitting Querry.");
+        return False;
+    return True;
+
+def RouteInterface():
+    # ToDo: add code for Route interface
+
+    
     return True;
 
 
