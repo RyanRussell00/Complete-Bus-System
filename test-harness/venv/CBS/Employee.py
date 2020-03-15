@@ -9,9 +9,22 @@ SELECT_EMPL_ROUTE_QUERY = "SELECT %s FROM %s WHERE %s IN (SELECT %s FROM %s WHER
 SELECT_EMPL_SCHEDULE = "SELECT %s FROM %s WHERE % (SELECT %s FROM %s WHERE %s)"
 
 
+# ------------------#
+# ToDo: Add function to get bus information such as capacity and manufactured date
+# ToDo: Make sure that we have some way of accessing each attribute of our tables, get rid of not used attributes.
+# ------------------#
+
+
 # Separating line purely for display purposes
 def SeparatingLine():
     print("-------------------------------------------------------------");
+
+
+# Regex cleans string to make them legible
+def clean(strIn):
+    result = re.sub("[^a-zA-Z0-9\s]*", "", str(strIn));
+    result = result.strip();
+    return result;
 
 
 def ValidateEmployee():
@@ -24,7 +37,7 @@ def ValidateEmployee():
 
         if (ssn.upper() == "X"):
             EndProgram();
-            continue;
+            break;
         elif (len(ssn) != 9):
             print("SSN must be 9 digits long.");
             continue;
@@ -50,33 +63,39 @@ def ValidateEmployee():
     return emp;
 
 
-# ToDo
-def EmployeeQueries():
+def SetCurrentEmployee():
     SeparatingLine();
     emp = ValidateEmployee();
     if (emp is None or len(emp) < 2):
         return False;
 
     global ssn;
-    ssn = emp[0].strip();
+    ssn = clean(emp[0]);
     global name;
-    name = emp[1].strip();
+    name = clean(emp[1]);
     if (ssn == "" or name == ""):
         print("Error: SSN or Name is empty.")
         return False;
+
+
+# ToDo
+def EmployeeQueries():
+    if (not SetCurrentEmployee()):
+        print("Error trying to get employee. Please contact your system administrator.");
 
     SeparatingLine();
     print("Selected Employee: " + name);
     # ToDo: Code the use cases for the Employees
     choice = "";
-    while (choice.upper() != "I" or choice.upper() != "B" or choice.upper() != "R" or choice.upper() != "X"):
+    while (choice == ""):
         print("Get Employee's information: I \n"
               "Get the buses that the Employee is assigned to: B \n"
               "Get the routes and times that the Employee is driving: R \n"
               "End program: X");
-        choice = input("Please enter a command: ");
+        choice = input("Please enter a command: ").upper();
 
     query = "";
+    print(choice);
     if (choice == "I"):
         # ToDo: Test the query
         # Join the employee table and the address table to get the full employee's information
@@ -89,7 +108,7 @@ def EmployeeQueries():
     elif (choice == "B"):
         # ToDo: Test the query
         # Gets all busses that the employee is assigned to
-        query = SELECT_QUERY % ("busID, busName", "BUS", "E_driver = " + ssn);
+        query = SELECT_QUERY % ("busName", "BUS", "E_driver = " + ssn);
     elif (choice == "R"):
         # ToDo: Test the query
         # Gets all routes that the employee is assigned to
@@ -97,6 +116,9 @@ def EmployeeQueries():
             "R_routeID, timeStart, timeEnd", "SCHEDULED", "B_busID", "busID", "BUS", "E_driver = " + ssn);
     elif (choice == "X"):
         EndProgram();
+    # No valid input, restart the prompts
+    else:
+        EmployeeQueries();
 
     result = SubmitQuery(query);
     if (result is None):
@@ -105,11 +127,21 @@ def EmployeeQueries():
     # If the result is empty that means the system returned an empty set
     elif (len(result) == 0):
         print("Empty Set: No values exist for request.")
+        return True;
     else:
         for line in result:
-            print(line);
+            print(clean(line));
+        return True;
 
 
+# ToDo:
+# Sets a current employee's address. Employee must exist beforehand.
+def SetAddress():
+    return False;
+
+
+# ToDo: Add prompt to ask to create an address after the query is successful.
+# Creates a new employee and optionally, an address for that employee
 def NewEmployee():
     SeparatingLine();
     # Dictionary (map) for employee's information
@@ -132,9 +164,8 @@ def NewEmployee():
             if (entry.upper() == "X"):
                 EndProgram();
             # Ensure the start date follows proper date-time format
-            # ToDo: Test the date
             if (key == "Start Date (YYYY-MM-DD)" and entry != ""):
-                print("datetime: " + entry);
+                # print("datetime: " + entry);
                 # r = re.compile('[0-9]{4}-[0-9]{2}-[0-9]{2}');
                 # if r.match(entry) is None:
                 #     print(entry + "Didn't match datetime");
@@ -161,7 +192,7 @@ def NewEmployee():
                 # else:
                 # Make sure SSN is 9 long
                 if (len(entry) == 9):
-                    print("9 long: " + entry);
+                    # print("9 long: " + entry);
                     # Make sure SSN can be int
                     try:
                         int(entry);
@@ -202,7 +233,7 @@ def NewEmployee():
     # Move all data from map to list in order to insert them into
 
     query = (NEW_EMPLOYEE_INSERT % (newValues));
-    print(query);
+    # print(query);
 
     result = SubmitInsert(query);
     # global variable accessible anywhere to get Employee's name

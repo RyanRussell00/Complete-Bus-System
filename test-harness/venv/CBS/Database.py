@@ -56,9 +56,9 @@ def GetDBCursor():
         return None;
 
 
-# Regex to get only the string with dashes, periods, and underscores
+# Regex to clean strings
 def clean(strIn):
-    result = re.sub("[^a-zA-Z0-9(),'\s*=-]*", "", str(strIn));
+    result = re.sub("[^a-zA-Z0-9(),._'\s*=-]*", "", str(strIn));
     result = result.strip();
     return result;
 
@@ -67,12 +67,12 @@ def Sanitize(line):
     if (line.strip() == ""):
         return "";
     line = clean(line);
-    print("Cleaned: " + line);
+    # print("Cleaned: " + line);
     if (";" in line or "DELETE" in line or "DROP" in line):
         print("Sanitization Warning: Illegal statement found. \n"
               "Line may not contain 'DELETE' or 'DROP' or ';'");
         return "";
-    print("Sanitized: " + line.strip());
+    # print("Sanitized: " + line.strip());
     return line.strip();
 
 

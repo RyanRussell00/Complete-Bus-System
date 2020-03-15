@@ -3,6 +3,7 @@ from datetime import datetime, timedelta, date;
 
 from Database import StartDBConnection;
 from Employee import EmployeeInterfaceActions;
+from Passenger import PassengerInterfaceActions;
 
 
 # Separating line purely for display purposes
@@ -94,7 +95,7 @@ def WelcomeUser():
     status = status.upper();
     if (status == "P"):
         # ToDo
-        PassengerInterface();
+        PassengerInterfaceActions();
     elif (status == "E"):
         EmployeeInterfaceActions();
     elif (status == "X"):
