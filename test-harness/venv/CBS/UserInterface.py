@@ -2,8 +2,9 @@ import re;
 from datetime import datetime, timedelta, date;
 
 from Database import StartDBConnection;
-from Employee import EmployeeInterfaceActions;
-from Passenger import PassengerInterfaceActions;
+from Employee import EmployeeInterface;
+from Passenger import PassengerInterface;
+from FormattingFunctions import *;
 
 
 # Separating line purely for display purposes
@@ -74,12 +75,12 @@ def CheckSchedule():
     return True;
 
 
-def EndProgram():
-    SeparatingLine()
-    CloseConnection();
-    print("Successfully disconnected from database.");
-    print("Thank you for using the Complete Bus System. Goodbye!");
-    exit(0);
+# def EndProgram():
+#     SeparatingLine()
+#     CloseConnection();
+#     print("Successfully disconnected from database.");
+#     print("Thank you for using the Complete Bus System. Goodbye!");
+#     exit(0);
 
 
 # Welcomes the user and lets them select their level of access
@@ -95,9 +96,9 @@ def WelcomeUser():
     status = status.upper();
     if (status == "P"):
         # ToDo
-        PassengerInterfaceActions();
+        PassengerInterface();
     elif (status == "E"):
-        EmployeeInterfaceActions();
+        EmployeeInterface();
     elif (status == "X"):
         EndProgram();
     else:

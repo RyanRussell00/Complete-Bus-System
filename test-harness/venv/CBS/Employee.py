@@ -1,5 +1,7 @@
-from Database import *;
 from datetime import datetime, timedelta, date
+
+from Database import *;
+from FormattingFunctions import *;
 
 # Ending semicolons intentionally left out because the sanitize function removes all semicolons
 SELECT_QUERY = "SELECT %s FROM %s WHERE %s"
@@ -13,18 +15,6 @@ SELECT_EMPL_SCHEDULE = "SELECT %s FROM %s WHERE % (SELECT %s FROM %s WHERE %s)"
 # ToDo: Add function to get bus information such as capacity and manufactured date
 # ToDo: Make sure that we have some way of accessing each attribute of our tables, get rid of not used attributes.
 # ------------------#
-
-
-# Separating line purely for display purposes
-def SeparatingLine():
-    print("-------------------------------------------------------------");
-
-
-# Regex cleans string to make them legible
-def clean(strIn):
-    result = re.sub("[^a-zA-Z0-9\s]*", "", str(strIn));
-    result = result.strip();
-    return result;
 
 
 def ValidateEmployee():
@@ -70,9 +60,9 @@ def SetCurrentEmployee():
         return False;
 
     global ssn;
-    ssn = clean(emp[0]);
+    ssn = DisplayClean(emp[0]);
     global name;
-    name = clean(emp[1]);
+    name = DisplayClean(emp[1]);
     if (ssn == "" or name == ""):
         print("Error: SSN or Name is empty.")
         return False;
@@ -130,7 +120,7 @@ def EmployeeQueries():
         return True;
     else:
         for line in result:
-            print(clean(line));
+            print(DisplayClean(line));
         return True;
 
 
@@ -198,6 +188,11 @@ def NewEmployee():
                         int(entry);
                     except ValueError:
                         entry = "";
+                    # Supervisor SSN can not be same as Employee SSN
+                    if (entry == empDict["Social Security Number"]):
+                        print("Supervisor SSN can not be the same as the new Employee's SSN. \n"
+                              "If there is no Supervisor please enter: NULL");
+                        entry = "";
                 else:
                     entry = "";
             # If the middle initial is more than 1 character and it's not NULL
@@ -246,7 +241,7 @@ def NewEmployee():
 
 # ToDo: Test
 # Actions for employees
-def EmployeeInterfaceActions():
+def EmployeeInterface():
     SeparatingLine();
 
     selection = "";

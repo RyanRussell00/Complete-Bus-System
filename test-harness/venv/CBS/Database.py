@@ -1,6 +1,8 @@
 import mysql.connector;
 import re;
 
+from FormattingFunctions import *;
+
 
 def StartDBConnection():
     user = "root";
@@ -40,12 +42,12 @@ def StartDBConnection():
         print(db);
 
 
-# Closes the connection to the database, if its not connected just ignore it
-def CloseConnection():
-    try:
-        mydb.close();
-    except NameError:
-        return;
+# # Closes the connection to the database, if its not connected just ignore it
+# def CloseConnection():
+#     try:
+#         mydb.close();
+#     except NameError:
+#         return;
 
 
 # Gets the cursor to the database, if it hasn't been created yet gives a None value
@@ -56,18 +58,11 @@ def GetDBCursor():
         return None;
 
 
-# Regex to clean strings
-def clean(strIn):
-    result = re.sub("[^a-zA-Z0-9(),._'\s*=-]*", "", str(strIn));
-    result = result.strip();
-    return result;
-
-
 def Sanitize(line):
     if (line.strip() == ""):
         return "";
-    line = clean(line);
-    # print("Cleaned: " + line);
+    line = DatabaseClean(line);
+    # print("DatabaseCleaned: " + line);
     if (";" in line or "DELETE" in line or "DROP" in line):
         print("Sanitization Warning: Illegal statement found. \n"
               "Line may not contain 'DELETE' or 'DROP' or ';'");
@@ -83,7 +78,7 @@ def SubmitQuery(query):
     result = [];
     dbCursor.execute(query + ";");
     for line in dbCursor:
-        result.append(clean(line));
+        result.append(DatabaseClean(line));
     return result;
 
 
