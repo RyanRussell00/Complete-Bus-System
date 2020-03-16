@@ -37,6 +37,17 @@ def GetCardInfo():
         print(DisplayClean(line));
     return cardNum;
 
+
+# ToDo: create
+def ReloadCard():
+    return False;
+
+
+# ToDo: Create
+def RenewCard():
+    return False;
+
+
 # ToDo
 def UpdateCard():
     cardNum = GetCardInfo();
