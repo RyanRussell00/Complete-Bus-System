@@ -12,9 +12,9 @@ def WelcomeUser():
     print("Welcome to the Complete Bus System Database!");
     status = "";
     while (status == ""):
-        print("I am a Passenger: P")
-        print("I am an Employee: E")
-        print("Exit Program: X")
+        print("I am a Passenger: P");
+        print("I am an Employee: E");
+        print("Exit Program: X");
         status = input("Please enter (P) (E) (X): ");
 
     status = status.upper();
