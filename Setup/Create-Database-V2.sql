@@ -109,8 +109,8 @@ CREATE TABLE SCHEDULED (
     R_routeID INT(3) NOT NULL,
     R_routeName VARCHAR(20) NOT NULL,
     B_busID INT(5),
-    timeStart TIME,
-    timeEnd TIME,
+    timeStart DATETIME,
+    timeEnd DATETIME,
     PRIMARY KEY (R_routeID, R_routeName, B_busID),
     CONSTRAINT scheduled_routeID FOREIGN KEY (R_routeID)
         REFERENCES ROUTE (routeID) ON DELETE CASCADE ON UPDATE CASCADE,
