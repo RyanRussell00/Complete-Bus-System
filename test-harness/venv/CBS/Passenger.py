@@ -10,7 +10,10 @@ GET_CARD_DATE_QUERY = "SELECT expiry_date FROM CARD WHERE cardNum = %s";
 RELOAD_CARD_UPDATE = "UPDATE CARD SET balance = %s WHERE cardNum = %s";
 RENEW_CARD_UPDATE = "UPDATE CARD SET expiry_date = '%s' WHERE cardNum = %s";
 # ToDo: This query
-GET_HISTORY_QUERY = "";
+GET_HISTORY_QUERY = "SELECT sc.R_routeID, sc.R_routeName, t.time_stamp, f.cost FROM FARE_TIER f, CARD c, TAPS t, " \
+                    "SCHEDULED sc WHERE c.cardNum = %s AND t.C_cardNum = c.cardNum AND c.F_fare = f.tier AND " \
+                    "t.B_busID = sc.B_busID AND t.time_stamp >= sc.timeStart AND t.time_stamp <= sc.timeEnd " \
+                    "ORDER BY t.time_stamp ASC";
 
 
 # Todo: This function lets passengers add more money to their card and renew their card pushing back their expiry date
@@ -236,7 +239,14 @@ def CardHistory():
         print("Error: Card not found.");
         return False;
 
-    # ToDo: query for card history
+    query = GET_HISTORY_QUERY % cardNum;
+
+    result = SubmitQuery(query);
+    for line in result:
+        print(DisplayClean(line));
+
+
+# ToDo: query for card history
 
 
 # Actions for employees
