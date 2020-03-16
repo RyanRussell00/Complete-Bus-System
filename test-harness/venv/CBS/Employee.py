@@ -3,12 +3,14 @@ from datetime import datetime, timedelta, date
 from Database import *;
 from FormattingFunctions import *;
 
+
 # Ending semicolons intentionally left out because the sanitize function removes all semicolons
 SELECT_QUERY = "SELECT %s FROM %s WHERE %s"
 SELECT_ALL_QUERY = "SELECT %s FROM %s"
 NEW_EMPLOYEE_INSERT = "INSERT INTO EMPLOYEE (ssn, Fname, Minit, Lname, startDate, supervisor) VALUES (%s)"
 SELECT_EMPL_ROUTE_QUERY = "SELECT %s FROM %s WHERE %s IN (SELECT %s FROM %s WHERE %s)"
 SELECT_EMPL_SCHEDULE = "SELECT %s FROM %s WHERE % (SELECT %s FROM %s WHERE %s)"
+ADDRESS_INSERT = "INSERT INTO ADDRESS (E_ssn, street, city, state, zip) VALUES (%s, %s, %s, %s, %s)"
 
 
 # ------------------#
@@ -126,9 +128,59 @@ def EmployeeQueries():
 
 # ToDo:
 # Sets a current employee's address. Employee must exist beforehand.
-def SetAddress():
-    return False;
+def SetAddress(E_ssn):
+    SeparatingLine();
+    US_States = set(["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS",
+                    "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY",
+                    "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV",
+                    "WI", "WY"]);
+    # Dictionary (map) for employee's address
+    empDict = {"Street": "",
+               "City": "",
+               "State": "",
+               "Zip code": ""}
+    for key in empDict:
+        while (empDict.get(key) == ""):
+            print("Please fill out the Employee's address. \n"
+                  "Enter 'X' at any time to exit the program.");
+            entry = input("Please enter employee's " + key + ": ");
+            entry = entry.strip();
+            if (entry.upper() == "X"):
+                EndProgram();
+            if (entry == ""):
+                print(key + " cannot be NULL\n");
+            if (key == "Street"):
+                street = entry;
+            if (key == "City"):
+                city = entry;
+            if (key == "State" and entry not in US_States):
+                print("Error: Invalid U.S State");
+                entry = "";
+                continue;
+            else:
+                state = entry;
+            if (key == "Zip code"):
+                if (len(entry) == 5):
+                    try:
+                        int(entry);
+                        zip = entry;
+                    except ValueError:
+                        print("Zip code must be a valid 5-digit number");
+                        entry = "";
+                        continue;
+                else:
+                    print(key + " must be a valid 5-digit number");
+                    entry = "";
+                    continue;
+            empDict[key] = entry;
 
+    query = ADDRESS_INSERT % (E_ssn, street, city, state, zip);
+    result = SubmitInsert(query);
+    if (result is False):
+        print("Error Submitting Insert.");
+        return False;
+    print("Employee address Successfully added!");
+    return True;
 
 # ToDo: Add prompt to ask to create an address after the query is successful.
 # Creates a new employee and optionally, an address for that employee
@@ -186,6 +238,8 @@ def NewEmployee():
                     # Make sure SSN can be int
                     try:
                         int(entry);
+                        if (key == "Social Security Number"):
+                            ssn = entry;
                     except ValueError:
                         entry = "";
                     # Supervisor SSN can not be same as Employee SSN
@@ -232,10 +286,13 @@ def NewEmployee():
 
     result = SubmitInsert(query);
     # global variable accessible anywhere to get Employee's name
-    if (result is False):
-        print("Error Submitting Query.");
-        return False;
+    # if (result is False):
+    #     print("Error Submitting Query.");
+    #     return False;
     print("New Employee Successfully added!");
+    nextChoice = input("Do you want to add address? (Y/N) ");
+    if (nextChoice.upper() == "Y"):
+        SetAddress(ssn);
     return True;
 
 
