@@ -63,6 +63,10 @@ def ReloadCard(cardNum):
             except ValueError:
                 print("Please enter a valid balance in the format: $$$$.$$");
                 balance = "";
+                continue;
+        else:
+            print("Please enter a valid balance in the format: $$$$.$$");
+            balance = "";
     balance = float(balance);
     query = RELOAD_CARD_UPDATE % (balance, cardNum);
     result = SubmitInsert(query);
