@@ -33,7 +33,11 @@ CREATE TABLE ADDRESS (
     zip CHAR(5) NOT NULL,
     PRIMARY KEY (E_ssn),
     CONSTRAINT address_ssn FOREIGN KEY (E_ssn)
-        REFERENCES EMPLOYEE (ssn) ON DELETE CASCADE ON UPDATE CASCADE
+        REFERENCES EMPLOYEE (ssn) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT ValidStates CHECK(state IN('AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS',
+                     'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY',
+                     'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV',
+                     'WI', 'WY'))
 );
 
 CREATE TABLE BUS (
