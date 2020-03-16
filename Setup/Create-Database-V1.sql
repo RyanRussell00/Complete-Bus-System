@@ -53,14 +53,15 @@ CREATE TABLE FARE_TIER (
     PRIMARY KEY (tier)
 );
 CREATE TABLE CARD (
-    cardNum INT(9) NOT NULL,
-    balance FLOAT(4 , 2 ) DEFAULT 0,
+    cardNum INT(9) AUTO_INCREMENT NOT NULL,
+    balance FLOAT(4,2) DEFAULT 0,
     expiry_date DATE,
     F_fare INT(2) NOT NULL,
     PRIMARY KEY (cardNum),
     CONSTRAINT card_fare FOREIGN KEY (F_fare)
         REFERENCES FARE_TIER (tier) ON DELETE CASCADE ON UPDATE CASCADE
 );
+ALTER TABLE CARD AUTO_INCREMENT = 100000000;
 CREATE TABLE TAPS (
     B_busID INT(5) NOT NULL,
     C_cardNum INT(9) NOT NULL,
@@ -110,3 +111,21 @@ CREATE TABLE SCHEDULED (
     CONSTRAINT scheduled_busID FOREIGN KEY (B_busID)
         REFERENCES BUS (busID) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+INSERT INTO FARE_TIER (tier, cost, fareName)
+VALUES (1, 1, 'Veteran');
+
+INSERT INTO FARE_TIER (tier, cost, fareName)
+VALUES (2, 1, 'Disabled');
+
+INSERT INTO FARE_TIER (tier, cost, fareName)
+VALUES (3, 1.5, 'Student');
+
+INSERT INTO FARE_TIER (tier, cost, fareName)
+VALUES (4, 1.5, 'Child');
+
+INSERT INTO FARE_TIER (tier, cost, fareName)
+VALUES (5, 2.75, 'Adult');
+
+INSERT INTO FARE_TIER (tier, cost, fareName)
+VALUES (6, 1, 'Senior');

@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta, date
 
 from Database import *;
-from FormattingFunctions import *;
+from CommonFunctions import *;
 
 # Ending semicolons intentionally left out because the sanitize function removes all semicolons
 SELECT_QUERY = "SELECT %s FROM %s WHERE %s"
@@ -9,7 +9,6 @@ SELECT_ALL_QUERY = "SELECT %s FROM %s"
 NEW_EMPLOYEE_INSERT = "INSERT INTO EMPLOYEE (ssn, Fname, Minit, Lname, startDate, supervisor) VALUES (%s)"
 SELECT_EMPL_ROUTE_QUERY = "SELECT %s FROM %s WHERE %s IN (SELECT %s FROM %s WHERE %s)"
 SELECT_EMPL_SCHEDULE = "SELECT %s FROM %s WHERE % (SELECT %s FROM %s WHERE %s)"
-
 
 # ------------------#
 # ToDo: Add function to get bus information such as capacity and manufactured date
