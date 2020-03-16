@@ -94,7 +94,7 @@ def EmployeeQueries():
         # Join the employee table and the address table to get the full employee's information
         #print(ssn + "\n");
 
-        query = (SELECT_QUERY % ("*", "EMPLOYEE AS E, ADDRESS AS A", "E.ssn = " + ssn + " AND A.E_ssn = " + ssn));
+        query = (SELECT_QUERY % ("*", "EMPLOYEE AS E LEFT JOIN ADDRESS AS A ON E.ssn = A.E_ssn", "E_ssn = " + ssn));
 
         # query = SELECT_ALL_QUERY % ("*", "EMPLOYEE");
         # employeeAddressQuery = "SELECT * FROM EMPLOYEE AS E, ADDRESS AS A WHERE E.ssn = " + ssn + " AND A.E_ssn = " + ssn;
@@ -269,10 +269,11 @@ def NewEmployee():
             elif (key == "Middle Initial" and len(entry) > 1):
                 print("Middle initial null.");
                 entry = "NULL";
-            if ((key == "First Name" or key == "Last Name") and entry.upper() == "NULL"):
-                print("NULL value not allowed here.")
-                entry = "";
-                entry = Sanitize(entry);
+            if ((key == "First Name" or key == "Last Name")):
+                if (entry.upper() == "NULL" or entry.upper() == "" or len(entry) <= 1):
+                    print("Invalid value. Cannot be NULL and more than 1")
+                    entry = "";
+                    entry = Sanitize(entry);
             empDict[key] = entry;
 
     # Populate a string with the new query
