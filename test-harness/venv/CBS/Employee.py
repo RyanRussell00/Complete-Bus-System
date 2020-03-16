@@ -126,8 +126,51 @@ def EmployeeQueries():
 
 # ToDo:
 # Sets a current employee's address. Employee must exist beforehand.
-def SetAddress():
-    return False;
+def SetAddress(E_ssn):
+    SeparatingLine();
+    US_States = set(["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS",
+                     "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY",
+                     "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV",
+                     "WI", "WY"]);
+    # Dictionary (map) for employee's address
+    empDict = {"Street": "",
+               "City": "",
+               "State": "",
+               "Zip code": ""}
+    for key in empDict:
+        while (empDict.get(key) == ""):
+            print("Please fill out the Employee's address. \n"
+                  "Enter 'X' at any time to exit the program.");
+            entry = input("Please enter employee's " + key + ": ");
+            entry = entry.strip();
+            if (entry.upper() == "X"):
+                EndProgram();
+            if (entry == ""):
+                print(key + " cannot be NULL\n");
+            if (key == "Street"):
+                street = entry;
+            if (key == "City"):
+                city = entry;
+            if (key == "State" and entry not in US_States):
+                print("Error: Invalid U.S State");
+                entry = "";
+                continue;
+            else:
+                state = entry;
+            if (key == "Zip code"):
+                if (len(entry) == 5):
+                    try:
+                        int(entry);
+                        zip = entry;
+                    except ValueError:
+                        print("Zip code must be a valid 5-digit number");
+                        entry = "";
+                        continue;
+                else:
+                    print(key + " must be a valid 5-digit number");
+                    entry = "";
+                    continue;
+            empDict[key] = entry;
 
 
 # ToDo: Add prompt to ask to create an address after the query is successful.
