@@ -12,6 +12,3 @@
 # DateTime: If single digit day/month DO NOT put 0 in front.
 # DateTime: USE THIS FORMAT EXACTLY: datetime.date(YYYY, (M)M, (D)D) #Do not put 0 in front of single digit Month or Day
 # Parentheses around expected output is optional
-
-123456789, 'Joe', '', 'Swanson', datetime.date(2020, 2, 4), None
-123456789
