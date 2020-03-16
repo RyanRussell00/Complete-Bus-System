@@ -105,10 +105,15 @@ def TestCommands(expectedFile, queriesFile):
         SeperatingLine();
         return False;
 
-    # print("Que");
-    # print(queries);
-    # print("Ex");
-    # print(expected);
+    print("Que");
+    print(queries);
+    print("Ex");
+    print(expected);
+
+    # Check if one file is empty and the other isn't
+    if ((len(queries) == 0 and len(expected) != 0) or (len(queries) != 0 and len(expected) == 0)):
+        print("Error: Either testing file or expected file is empty and the other is not.");
+        return False;
 
     # assert (len(queries) == len(
     #     expected)), "Actual queries and expected outputs do not match. Files: " + queriesFile + " and " + expectedFile;
@@ -126,15 +131,25 @@ def TestCommands(expectedFile, queriesFile):
             SeperatingLine();
             return False;
 
-        for line in dbCursor:
+        result = dbCursor.fetchall();
+        # If the returned result is empty, but we were expecting a not empty
+        if (len(queries) != 0 and len(result) == 0):
+            print("ERROR: Query: " + queries[qCount] +
+                  " returned an empty set but we were expecting a not empty set.");
+            return False;
+
+        for line in result:
+            print(line);
             if (eCount >= len(expected)):
                 print("Ran out of expected outputs.");
                 SeperatingLine();
                 return False;
 
             # Clean lines
-            actual = clean(line);
-            expct = clean(expected[eCount]);
+            # actual = clean(line);
+            # expct = clean(expected[eCount]);
+            actual = line;
+            expct = expected[eCount];
 
             # print("Actual: " + actual);
             # print("Expected: " + expct);
@@ -213,7 +228,7 @@ def StartDBConnection():
 
     print("This version of the tests only work on local MySQL and require you to have the database already created");
     confirm = input("I have the database created on my local MySQL: Y/N: ");
-    if (confirm.upper() != "Y"):
+    if (confirm.upper() != 'Y'):
         print("Please create the database on your local MySQL and run the program again.")
         exit(1);
 
