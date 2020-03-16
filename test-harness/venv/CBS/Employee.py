@@ -10,6 +10,7 @@ NEW_EMPLOYEE_INSERT = "INSERT INTO EMPLOYEE (ssn, Fname, Minit, Lname, startDate
 SELECT_EMPL_ROUTE_QUERY = "SELECT %s FROM %s WHERE %s IN (SELECT %s FROM %s WHERE %s)"
 SELECT_EMPL_SCHEDULE = "SELECT %s FROM %s WHERE % (SELECT %s FROM %s WHERE %s)"
 
+
 # ------------------#
 # ToDo: Add function to get bus information such as capacity and manufactured date
 # ToDo: Make sure that we have some way of accessing each attribute of our tables, get rid of not used attributes.

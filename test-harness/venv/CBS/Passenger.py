@@ -37,10 +37,25 @@ def GetCardInfo():
         print(DisplayClean(line));
     return cardNum;
 
-
 # ToDo
-def ReloadCard():
+def UpdateCard():
     cardNum = GetCardInfo();
+    if (cardNum == ""):
+        print("Error: Card not found.");
+        return False;
+
+    choice = "";
+    while (choice == ""):
+        print("Reload Card: R \n"
+              "Renew Card:  E \n"
+              "Exit Program: X");
+        choice = input("Please make a selection: ");
+        choice = choice.strip().upper();
+        if (choice == "X"):
+            EndProgram();
+        elif (choice == "R"):
+            # ToDo: Reload card
+            query = "";
 
 
 def GetFareTier():
@@ -156,7 +171,7 @@ def PassengerInterface():
             NewPassenger();
         elif (selection == "R"):
             # ToDo: Create
-            ReloadCard();
+            UpdateCard();
         elif (selection == "H"):
             # ToDo: Create
             CardQueries();
