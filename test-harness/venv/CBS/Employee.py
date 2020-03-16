@@ -175,7 +175,6 @@ def SetAddress(E_ssn):
             empDict[key] = entry;
 
     query = ADDRESS_INSERT % (E_ssn, street, city, state, zip);
-    print(zip);
     result = SubmitInsert(query);
     if (result is False):
         print("Error Submitting Insert.");
