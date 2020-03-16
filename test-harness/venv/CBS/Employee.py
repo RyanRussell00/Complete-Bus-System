@@ -175,6 +175,7 @@ def SetAddress(E_ssn):
             empDict[key] = entry;
 
     query = ADDRESS_INSERT % (E_ssn, street, city, state, zip);
+    print(zip);
     result = SubmitInsert(query);
     if (result is False):
         print("Error Submitting Insert.");
@@ -286,9 +287,9 @@ def NewEmployee():
 
     result = SubmitInsert(query);
     # global variable accessible anywhere to get Employee's name
-    # if (result is False):
-    #     print("Error Submitting Query.");
-    #     return False;
+    if (result is False):
+        print("Error Submitting Query.");
+        return False;
     print("New Employee Successfully added!");
     nextChoice = input("Do you want to add address? (Y/N) ");
     if (nextChoice.upper() == "Y"):
