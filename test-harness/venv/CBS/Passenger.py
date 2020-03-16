@@ -9,6 +9,8 @@ GET_CARD_QUERY = "SELECT cardNum, balance, expiry_date, F.fareName FROM CARD AS 
 GET_CARD_DATE_QUERY = "SELECT expiry_date FROM CARD WHERE cardNum = %s";
 RELOAD_CARD_UPDATE = "UPDATE CARD SET balance = %s WHERE cardNum = %s";
 RENEW_CARD_UPDATE = "UPDATE CARD SET expiry_date = '%s' WHERE cardNum = %s";
+# ToDo: This query
+GET_HISTORY_QUERY = "";
 
 
 # Todo: This function lets passengers add more money to their card and renew their card pushing back their expiry date
@@ -22,12 +24,15 @@ def GetCardInfo():
         if (cardNum.upper() == "X"):
             EndProgram();
         # Ensure card num is valid
-        if (len(cardNum) == 9):
+        elif (len(cardNum) == 9):
             try:
-                cardNum = int(cardNum);
+                int(cardNum);
             except ValueError:
                 print("Please enter a valid card number with 9 digits.")
                 cardNum = "";
+                # continue;
+        else:
+            cardNum = "";
 
     query = GET_CARD_QUERY % (cardNum);
     result = SubmitQuery(query);
@@ -99,7 +104,7 @@ def RenewCard(cardNum):
         print("Something went wrong getting the current expiry date.");
 
 
-# ToDo
+# ToDo: Test
 def UpdateCard():
     cardNum = GetCardInfo();
     if (cardNum == ""):
@@ -122,6 +127,7 @@ def UpdateCard():
             RenewCard(cardNum);
 
 
+# ToDo: Test
 def GetFareTier():
     status = "";
     while (status == ""):
@@ -149,6 +155,7 @@ def GetFareTier():
     return str(status);
 
 
+# ToDo: Test
 def NewPassenger():
     SeparatingLine();
     # Dictionary (map) for employee's information
@@ -217,6 +224,16 @@ def NewPassenger():
 
 
 # ToDo: Test
+def CardHistory():
+    cardNum = GetCardInfo();
+    if (cardNum == ""):
+        print("Error: Card not found.");
+        return False;
+
+    # ToDo: query for card history
+
+
+# ToDo: Test
 # Actions for employees
 def PassengerInterface():
     selection = "";
@@ -238,7 +255,7 @@ def PassengerInterface():
             UpdateCard();
         elif (selection == "H"):
             # ToDo: Create
-            CardQueries();
+            CardHistory();
         elif (selection == "C"):
             # ToDo: Test
             CheckSchedule();
