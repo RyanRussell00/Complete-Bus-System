@@ -53,6 +53,7 @@ def readFromFile(path, commands):
             currLine += line;
         # If the current line isn't empty
         currLine = currLine.strip();
+        print(currLine);
         if (currLine):
             # if we are reading commands and hit a semicolon add to the total lines
             if (commands is True and ';' in line):
@@ -105,10 +106,10 @@ def TestCommands(expectedFile, queriesFile):
         SeperatingLine();
         return False;
 
-    print("Que");
-    print(queries);
-    print("Ex");
-    print(expected);
+    # print("Que");
+    # print(queries);
+    # print("Ex");
+    # print(expected);
 
     # Check if one file is empty and the other isn't
     if ((len(queries) == 0 and len(expected) != 0) or (len(queries) != 0 and len(expected) == 0)):
@@ -139,20 +140,16 @@ def TestCommands(expectedFile, queriesFile):
             return False;
 
         for line in result:
-            print(line);
             if (eCount >= len(expected)):
                 print("Ran out of expected outputs.");
                 SeperatingLine();
                 return False;
 
             # Clean lines
-            # actual = clean(line);
-            # expct = clean(expected[eCount]);
-            actual = line;
-            expct = expected[eCount];
-
-            # print("Actual: " + actual);
-            # print("Expected: " + expct);
+            actual = clean(line);
+            expct = clean(expected[eCount]);
+            # actual = line;
+            # expct = expected[eCount];
 
             if (actual != expct):
                 print("Actual and Expected dont match.");
@@ -160,6 +157,8 @@ def TestCommands(expectedFile, queriesFile):
                 print("Expected: " + expct);
                 SeperatingLine();
                 return False;
+            else:
+                print("Query passed successfully.");
 
             eCount += 1;
 
