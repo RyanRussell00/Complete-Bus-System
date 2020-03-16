@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta, date
 
 from Database import *;
-from FormattingFunctions import *;
+from CommonFunctions import *;
 
 
 # Ending semicolons intentionally left out because the sanitize function removes all semicolons
