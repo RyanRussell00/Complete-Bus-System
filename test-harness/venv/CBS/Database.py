@@ -1,7 +1,7 @@
 import mysql.connector;
 import re;
 
-from FormattingFunctions import *;
+from CommonFunctions import *;
 
 
 def StartDBConnection():

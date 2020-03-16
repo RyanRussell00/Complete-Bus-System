@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta, date
 
 from Database import *;
-from FormattingFunctions import *;
+from CommonFunctions import *;
 
 
 # Ending semicolons intentionally left out because the sanitize function removes all semicolons
@@ -143,7 +143,8 @@ def SetAddress(E_ssn):
         while (empDict.get(key) == ""):
             print("Please fill out the Employee's address. \n"
                   "Enter 'X' at any time to exit the program.");
-            entry = input("Please enter employee's " + key + ": ");
+            entry = "";
+            entry = input("Please enter employee's " + key + ": ").upper();
             entry = entry.strip();
             if (entry.upper() == "X"):
                 EndProgram();
@@ -153,12 +154,13 @@ def SetAddress(E_ssn):
                 street = entry;
             if (key == "City"):
                 city = entry;
-            if (key == "State" and entry not in US_States):
-                print("Error: Invalid U.S State");
-                entry = "";
-                continue;
-            else:
-                state = entry;
+            if (key == "State"):
+                if entry not in US_States:
+                    print("Error: Invalid U.S State");
+                    entry = "";
+                    continue;
+                else:
+                    state = entry;
             if (key == "Zip code"):
                 if (len(entry) == 5):
                     try:
@@ -172,9 +174,13 @@ def SetAddress(E_ssn):
                     print(key + " must be a valid 5-digit number");
                     entry = "";
                     continue;
+                entry = Sanitize(entry);
             empDict[key] = entry;
 
     query = ADDRESS_INSERT % (E_ssn, street, city, state, zip);
+    # print(city+"\n");
+    # print(state+ "\n");
+    # print(zip + "\n");
     result = SubmitInsert(query);
     if (result is False):
         print("Error Submitting Insert.");
