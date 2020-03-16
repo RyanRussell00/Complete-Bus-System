@@ -77,7 +77,7 @@ CREATE TABLE BUS_STOP (
     PRIMARY KEY (stopID)
 );
 CREATE TABLE ROUTE (
-    routeID INT(6) NOT NULL,
+    routeID INT(3) NOT NULL,
     routeName VARCHAR(20) NOT NULL,
     S_firstStop INT(6) NOT NULL,
     S_lastStop INT(6) NOT NULL,
@@ -89,7 +89,8 @@ CREATE TABLE ROUTE (
         REFERENCES BUS_STOP (stopID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE TABLE VISITS (
-    R_routeID INT(6) NOT NULL,
+    R_routeID INT(3) NOT NULL,
+	R_routeName VARCHAR(20) NOT NULL,
     S_stopID INT(6) NOT NULL,
 	typeOfDay VARCHAR(10) NOT NULL DEFAULT 'Weekday',
     arrivalTime TIME NOT NULL,
@@ -97,12 +98,14 @@ CREATE TABLE VISITS (
     PRIMARY KEY (R_routeID, S_stopID, typeOfDay),
     CONSTRAINT visit_routeID FOREIGN KEY (R_routeID)
         REFERENCES ROUTE (routeID) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT visit_routeName FOREIGN KEY (R_routeName)
+        REFERENCES ROUTE (routeName) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT visit_stopID FOREIGN KEY (S_stopID)
         REFERENCES BUS_STOP (stopID) ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT dayTypes CHECK(typeOfDay IN('Weekday', 'Weekend', 'Holiday', 'Snow'))
 );
 CREATE TABLE SCHEDULED (
-    R_routeID INT(6) NOT NULL,
+    R_routeID INT(3) NOT NULL,
 	R_routeName VARCHAR(20) NOT NULL,
     B_busID INT(5),
     timeStart TIME,
