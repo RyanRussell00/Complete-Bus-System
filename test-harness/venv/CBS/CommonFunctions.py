@@ -21,12 +21,29 @@ def DisplayClean(strIn):
     result = re.sub("[^a-zA-Z0-9(),\s]*", "", str(strIn));
     result = result.strip();
     # remove the weird database/python formatting for dates
-    if (" datetimedate" in result):
-        result = result.replace(" datetimedate", " ");
+    if ("datetime.date" in result):
+        result = result.replace("datetime.date", " ");
     if (" time" in result):
         result = result.replace(" time", " ");
     if ("datetimetimedelta" in result):
         result = result.replace("datetimetimedelta", "");
+    return result;
+
+
+def DateClean(strIn):
+    result = strIn;
+    # remove the weird database/python formatting for dates
+    if ("datetime.date" in result):
+        result = result.replace("datetime.date", "");
+    if (" time" in result):
+        result = result.replace(" time", " ");
+    if ("datetimetimedelta" in result):
+        result = result.replace("datetimetimedelta", "");
+    result = re.sub("[^a-zA-Z0-9.,\s]*", "", str(result));
+    result = result.strip();
+    # Replace commas with dashes for date formatting
+    result = result.replace(", ", "-");
+    result = result.replace(",", "");
     return result;
 
 

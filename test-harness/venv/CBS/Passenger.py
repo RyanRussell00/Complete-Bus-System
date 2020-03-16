@@ -149,10 +149,8 @@ def RenewCard(cardNum):
     result = SubmitQuery(currQuery);
     currDate = "";
     for line in result:
-        currDate = str(DisplayClean(line)).strip();
-        # Replace commas with dashes for date formatting
-        currDate = currDate.replace(", ", "-");
-        currDate = currDate.replace(",", "");
+        currDate = str(DateClean(line));
+        print("Currdate: " + currDate);
 
     print(currDate);
 
