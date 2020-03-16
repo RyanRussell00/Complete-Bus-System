@@ -14,12 +14,7 @@ ADDRESS_INSERT_UPDATE = "INSERT INTO ADDRESS (E_ssn, street, city, state, zip) V
 EMPLOYEE_INFORMATION_QUERY = "SELECT * FROM EMPLOYEE AS E LEFT JOIN ADDRESS AS A ON E.ssn = A.E_ssn WHERE E.ssn = %s";
 
 
-# ------------------#
-# ToDo: Add function to get bus information such as capacity and manufactured date
-# ToDo: Make sure that we have some way of accessing each attribute of our tables, get rid of not used attributes.
-# ------------------#
-
-
+# Validates an employee is valid
 def ValidateEmployee():
     ssn = "";
     valid = False;
@@ -56,6 +51,7 @@ def ValidateEmployee():
     return emp;
 
 
+# Sets the current employee
 def SetCurrentEmployee():
     SeparatingLine();
     emp = ValidateEmployee();
@@ -72,7 +68,7 @@ def SetCurrentEmployee():
     return True;
 
 
-# ToDo
+# Options for the employee
 def EmployeeQueries():
     if (not SetCurrentEmployee()):
         print("Error trying to get employee. Please contact your system administrator.");
@@ -131,7 +127,6 @@ def EmployeeQueries():
         return True;
 
 
-# ToDo:
 # Sets a current employee's address. Employee must exist beforehand.
 def SetAddress(E_ssn):
     SeparatingLine();
@@ -183,9 +178,6 @@ def SetAddress(E_ssn):
             empDict[key] = entry;
 
     query = ADDRESS_INSERT_UPDATE % (E_ssn, street, city, state, zip, street, city, state, zip);
-    # print(city+"\n");
-    # print(state+ "\n");
-    # print(zip + "\n");
     result = SubmitInsert(query);
     if (result is False):
         print("Error Submitting Insert.");
@@ -194,7 +186,6 @@ def SetAddress(E_ssn):
     return True;
 
 
-# ToDo: Add prompt to ask to create an address after the query is successful.
 # Creates a new employee and optionally, an address for that employee
 def NewEmployee():
     SeparatingLine();
@@ -219,14 +210,8 @@ def NewEmployee():
                 EndProgram();
             # Ensure the start date follows proper date-time format
             if (key == "Start Date (YYYY-MM-DD)" and entry != ""):
-                # print("datetime: " + entry);
-                # r = re.compile('[0-9]{4}-[0-9]{2}-[0-9]{2}');
-                # if r.match(entry) is None:
-                #     print(entry + "Didn't match datetime");
-                #     entry = "";
                 try:
                     dateObj = datetime.strptime(entry, '%Y-%m-%d').date();
-                    # print("dateObj: " + dateObj);
                 except ValueError:
                     print("Error: Date must be in YYYY-MM-DD format.");
                     entry = "";
@@ -240,13 +225,8 @@ def NewEmployee():
             # Make sure the SSN and Super-SSN can be integers.
             # If expecting SSN and SuperSSN and not null
             if (key == "Social Security Number" or (key == "Supervisor SSN" and entry.upper() != "NULL")):
-                # # If needing Super SSN and input isn't NULL
-                # if (key == "Supervisor SSN" and entry.upper() == "NULL"):
-                #
-                # else:
                 # Make sure SSN is 9 long
                 if (len(entry) == 9):
-                    # print("9 long: " + entry);
                     # Make sure SSN can be int
                     try:
                         int(entry);
@@ -295,7 +275,6 @@ def NewEmployee():
     # Move all data from map to list in order to insert them into
 
     query = (NEW_EMPLOYEE_INSERT % (newValues));
-    # print(query);
 
     result = SubmitInsert(query);
     # global variable accessible anywhere to get Employee's name
@@ -309,6 +288,7 @@ def NewEmployee():
     return True;
 
 
+# Update an employees address; creates address if it doesn't exist or updates the existing address
 def UpdateAddress():
     ssn = "";
     valid = False;
@@ -333,7 +313,6 @@ def UpdateAddress():
     SetAddress(ssn);
 
 
-# ToDo: Test
 # Actions for employees
 def EmployeeInterface():
     SeparatingLine();
