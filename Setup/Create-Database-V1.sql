@@ -78,9 +78,10 @@ CREATE TABLE BUS_STOP (
 );
 CREATE TABLE ROUTE (
     routeID INT(6) NOT NULL,
-	routeName VARCHAR(20) NOT NULL,
+    routeName VARCHAR(20) NOT NULL,
     S_firstStop INT(6) NOT NULL,
     S_lastStop INT(6) NOT NULL,
+    KEY (routeName),
     PRIMARY KEY (routeID, routeName),
     CONSTRAINT route_firstStop FOREIGN KEY (S_firstStop)
         REFERENCES BUS_STOP (stopID) ON DELETE CASCADE ON UPDATE CASCADE,
