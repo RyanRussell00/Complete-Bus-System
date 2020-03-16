@@ -13,6 +13,70 @@ RENEW_CARD_UPDATE = "UPDATE CARD SET expiry_date = '%s' WHERE cardNum = %s";
 GET_HISTORY_QUERY = "SELECT sc.R_routeID, sc.R_routeName, t.time_stamp, f.cost FROM FARE_TIER f, CARD c, TAPS t, " \
                     "SCHEDULED sc WHERE c.cardNum = %s AND t.C_cardNum = c.cardNum AND c.F_fare = f.tier AND t.B_busID = sc.B_busID " \
                     "AND t.time_stamp >= sc.timeStart AND t.time_stamp <= sc.timeEnd ORDER BY t.time_stamp ASC";
+# Semicolon left out intentionally
+VISIT_QUERY = "SELECT v.arrivalTime, v.S_stopID FROM VISITS v, ROUTE r WHERE v.R_routeID = r.routeID AND r.routeID = %s" \
+              " AND r.routeName = '%s' AND v.typeOfDay = '%s' ORDER BY v.arrivalTime ASC";
+
+
+# Gets all stops on a bus's route on a given type of date
+# Use Case: I want to know at what time the 535 Lynnwood will be at each of its stops on March 15 2020
+def CheckSchedule():
+    SeparatingLine();
+
+    # Dictionary (map) to receive multiple inputs from user
+    reqDict = {"Route Number (3 digits)": "",
+               "Route Name": "",
+               "Day": ""
+               };
+    reqDict["Day"] = GetDay();
+    for key in reqDict:
+        while (reqDict[key] == ""):
+            print("Please enter the " + key + " \n" +
+                  "Or enter 'X' at any time to exit the program.");
+            entry = input(key + ": ");
+            entry = entry.strip();
+            if (entry.upper() == "X"):
+                EndProgram();
+            # Ensure Route number is valid
+            if (key == "Route Number (3 digits)"):
+                if (len(entry) == 3):
+                    try:
+                        int(entry);
+                    except ValueError:
+                        entry = "";
+                        print("Invalid Input: Route Number must be exactly 3 numbers long.");
+                else:
+                    entry = "";
+            elif (key == "Route Name"):
+                if (len(entry) == 0 or len(entry) > 20):
+                    entry = "";
+            reqDict[key] = entry;
+
+    allValues = [];
+    for val in reqDict.values():
+        allValues.append(val);
+    print(allValues);
+    if (len(allValues) != 3):
+        print("Something went wrong with inputting data.");
+        return False;
+    # ToDo: Query
+    query = VISIT_QUERY % (allValues[0], allValues[1], allValues[2]);
+    print(query);
+
+    result = SubmitQuery(query);
+    # global variable accessible anywhere to get Employee's name
+    if (result is False):
+        print("Error Submitting Query.");
+        return False;
+    # If the result is empty that means the system returned an empty set
+    elif (len(result) == 0):
+        print("Empty Set: No values exist for request.")
+        return False;
+    else:
+        print("Arrival Time  |  Stop ID");
+        for line in result:
+            print(DisplayClean(line));
+    return True;
 
 
 # Todo: This function lets passengers add more money to their card and renew their card pushing back their expiry date
