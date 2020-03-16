@@ -28,7 +28,7 @@ CREATE TABLE EMPLOYEE (
 CREATE TABLE ADDRESS (
     E_ssn INT(9) NOT NULL UNIQUE,
     street VARCHAR(20) NOT NULL,
-    city VARCHAR(12) NOT NULL,
+    city VARCHAR(30) NOT NULL,
     state CHAR(2) NOT NULL,
     zip CHAR(5) NOT NULL,
     PRIMARY KEY (E_ssn),
@@ -37,7 +37,7 @@ CREATE TABLE ADDRESS (
     CONSTRAINT ValidStates CHECK(state IN('AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS',
                      'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY',
                      'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV',
-                     'WI', 'WY'))
+                     'WI', 'WY', 'DC'))
 );
 
 CREATE TABLE BUS (
@@ -77,8 +77,8 @@ CREATE TABLE TAPS (
 );
 CREATE TABLE BUS_STOP (
     stopID INT(6) NOT NULL,
-    street1 VARCHAR(20) NOT NULL,
-    street2 VARCHAR(20) DEFAULT NULL,
+    street1 VARCHAR(30) NOT NULL,
+    street2 VARCHAR(30) DEFAULT NULL,
     PRIMARY KEY (stopID)
 );
 CREATE TABLE ROUTE (

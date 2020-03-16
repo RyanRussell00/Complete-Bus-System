@@ -3198,7 +3198,7 @@ insert into TAPS (B_busID, C_cardNum, time_stamp) values (44691, 181581683, '202
 
 
 -- Delete all data from BUS_STOP before inserting
- -- DELETE FROM BUS_STOP;
+-- DELETE FROM BUS_STOP;
 
 insert into BUS_STOP (stopID, street1, street2) values (364780, ' Talmadge Lane', ' Schlimgen Plaza');
 insert into BUS_STOP (stopID, street1, street2) values (568010, ' Meadow Valley Junction', ' Killdeer Circle');
