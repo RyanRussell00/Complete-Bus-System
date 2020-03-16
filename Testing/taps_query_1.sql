@@ -72,3 +72,10 @@ WHERE c.cardNum = 111111111
 	AND t.time_stamp >= sc.timeStart
 	AND t.time_stamp <= sc.timeEnd
 ORDER BY t.time_stamp ASC;
+
+DELETE FROM SCHEDULED;
+DELETE FROM ROUTE;
+DELETE FROM BUS_STOP;
+DELETE FROM TAPS;
+DELETE FROM BUS;
+DELETE FROM CARD;
