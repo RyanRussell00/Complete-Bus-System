@@ -75,8 +75,8 @@ def insertFromFile(path):
 mydb = mysql.connector.connect(
     user='root',
     password='root',
-    host='localhost'
-    # database='CBS'
+    host='localhost',
+    database='CBS'
 );
 dbCursor = mydb.cursor();
 
