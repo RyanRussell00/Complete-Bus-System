@@ -189,6 +189,10 @@ def NewPassenger():
             except ValueError:
                 print("Please enter a valid balance in the format: $$$$.$$");
                 entry = "";
+                continue;
+        else:
+            print("Please enter a valid balance in the format: $$$$.$$");
+            entry = "";
         passDict[key] = entry;
 
     # Get user status/fare tier
