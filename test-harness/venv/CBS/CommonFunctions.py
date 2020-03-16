@@ -11,18 +11,20 @@ def EndProgram():
 
 # Regex to clean strings for database
 def DatabaseClean(strIn):
-    result = re.sub("[^a-zA-Z0-9(),._'\s*=-]*", "", str(strIn));
+    result = re.sub("[^a-zA-Z0-9(),.<>_'\s*=-]*", "", str(strIn));
     result = result.strip();
     return result;
 
 
 # Regex cleans string for display
 def DisplayClean(strIn):
-    result = re.sub("[^a-zA-Z0-9,\s]*", "", str(strIn));
+    result = re.sub("[^a-zA-Z0-9(),\s]*", "", str(strIn));
     result = result.strip();
     # remove the weird database/python formatting for dates
-    if ("datetimedate" in result):
-        result = result.replace("datetimedate", "");
+    if (" datetimedate" in result):
+        result = result.replace(" datetimedate", " ");
+    if (" time" in result):
+        result = result.replace(" time", " ");
     return result;
 
 
