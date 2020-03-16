@@ -131,7 +131,6 @@ def UpdateCard():
             RenewCard(cardNum);
 
 
-# ToDo: Test
 def GetFareTier():
     status = "";
     while (status == ""):
@@ -159,7 +158,6 @@ def GetFareTier():
     return str(status);
 
 
-# ToDo: Test
 def NewPassenger():
     SeparatingLine();
     # Dictionary (map) for employee's information
@@ -231,7 +229,7 @@ def NewPassenger():
     return True;
 
 
-# ToDo: Test
+# ToDo: Create
 def CardHistory():
     cardNum = GetCardInfo();
     if (cardNum == ""):
@@ -241,7 +239,6 @@ def CardHistory():
     # ToDo: query for card history
 
 
-# ToDo: Test
 # Actions for employees
 def PassengerInterface():
     selection = "";
@@ -256,10 +253,8 @@ def PassengerInterface():
         selection = input("Please enter a command: ")
         selection = selection.upper();
         if (selection == "N"):
-            # ToDo: Test
             NewPassenger();
         elif (selection == "R"):
-            # ToDo: Create
             UpdateCard();
         elif (selection == "H"):
             # ToDo: Create
