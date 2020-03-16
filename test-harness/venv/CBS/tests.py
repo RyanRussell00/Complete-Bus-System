@@ -8,8 +8,8 @@ Tests the database to ensure data exists. Expects the database to be populated w
 '''
 
 
-# Separating line purely for display purposes
-def SeparatingLine():
+# Seperating line purely for display purposes
+def SeperatingLine():
     print("-------------------------------------------------------------");
 
 
@@ -79,14 +79,14 @@ def TablesExist():
         line = '%s' % line;
         if (line not in expectedTables):
             print("Found Unexpected Table: " + str(line));
-            SeparatingLine();
+            SeperatingLine();
             return False;
         count += 1;
 
     # If the total number of tables expected doesnt meet actual counted
     if (count != len(expectedTables)):
         print("Number of actual tables doesn't meet number of expected tables");
-        SeparatingLine();
+        SeperatingLine();
         return False
 
     return True;
@@ -102,7 +102,7 @@ def TestCommands(expectedFile, queriesFile):
 
     if (expected is None or queries is None):
         print("Failed to read expected outputs or queries commands");
-        SeparatingLine();
+        SeperatingLine();
         return False;
 
     # print("Que");
@@ -123,13 +123,13 @@ def TestCommands(expectedFile, queriesFile):
         except mysql.connector.ProgrammingError as pe:
             print("MYSQL ERROR EXECUTING: " + queries[qCount]);
             print(pe);
-            SeparatingLine();
+            SeperatingLine();
             return False;
 
         for line in dbCursor:
             if (eCount >= len(expected)):
                 print("Ran out of expected outputs.");
-                SeparatingLine();
+                SeperatingLine();
                 return False;
 
             # Clean lines
@@ -143,7 +143,7 @@ def TestCommands(expectedFile, queriesFile):
                 print("Actual and Expected dont match.");
                 print("Actual: " + actual);
                 print("Expected: " + expct);
-                SeparatingLine();
+                SeperatingLine();
                 return False;
 
             eCount += 1;
@@ -176,7 +176,7 @@ def RunAllAutoTests(dir):
         print("Every test file must have a matching expected file. ");
         print("Ensure the files exist and are named properly.");
         print("Files must end in 'Expected.txt' or 'Tests.txt' and the prefix must be identical.");
-        SeparatingLine();
+        SeperatingLine();
         return False;
 
     # Sort the files to get the matching prefixes next to each other
@@ -198,61 +198,61 @@ def RefreshTests():
         refresh = input("Refresh Testing Files? Y/N: ");
         if (RunAllAutoTests("../../auto-test-files")):
             print("Some things went wrong. Please view the error messages above.");
-            SeparatingLine();
+            SeperatingLine();
 
 
-# # Gets the database login information from the user and starts the DB connection
-# def StartDBConnection():
-#     user = "";
-#     password = "";
-#     host = "";
-#     databaseName = "";
-#
-#     print("Welcome to the automated tests for the Complete-Bus-System database. \n");
-#     print("If you witness the program crash please take a screenshot and contact your system admin. \n");
-#
-#     print("This version of the tests only work on local MySQL and require you to have the database already created");
-#     confirm = input("I have the database created on my local MySQL: Y/N: ");
-#     if (confirm.upper() != 'Y'):
-#         print("Please create the database on your local MySQL and run the program again.")
-#         exit(1);
-#
-#     while (user == ""):
-#         user = input("Please enter the username to your local MySQL database: ");
-#         print("You entered: " + user);
-#
-#     while (password == ""):
-#         password = input("Please enter the password to your local MySQL database: ");
-#         print("You entered: " + password);
-#
-#     while (host == ""):
-#         host = input("Please enter the host to your local MySQL database (commonly `localhost`): ");
-#         print("You entered: " + host);
-#
-#     while (databaseName == ""):
-#         databaseName = input("Please enter the name of the database you want to use (commonly CBS): ");
-#         print("You entered: " + databaseName);
-#
-#     try:
-#         global mydb;
-#         mydb = mysql.connector.connect(
-#             user=user,
-#             password=password,
-#             host=host,
-#             database=databaseName
-#         );
-#         global dbCursor;
-#         dbCursor = mydb.cursor();
-#     except mysql.connector.errors.DatabaseError as db:
-#         print("Error connecting to database. Please View The Error Message and Try Again.");
-#         print(db);
-#         SeparatingLine();
-#         # Have user try to login again
-#         StartDBConnection();
-#
-#     assert (dbCursor is not None), "auto-tests: Database connection is null";
-#
-#     RefreshTests();
+# Gets the database login information from the user and starts the DB connection
+def StartDBConnection():
+    user = "";
+    password = "";
+    host = "";
+    databaseName = "";
+
+    print("Welcome to the automated tests for the Complete-Bus-System database. \n");
+    print("If you witness the program crash please take a screenshot and contact your system admin. \n");
+
+    print("This version of the tests only work on local MySQL and require you to have the database already created");
+    confirm = input("I have the database created on my local MySQL: Y/N: ");
+    if (confirm.upper() != "Y"):
+        print("Please create the database on your local MySQL and run the program again.")
+        exit(1);
+
+    while (user == ""):
+        user = input("Please enter the username to your local MySQL database: ");
+        print("You entered: " + user);
+
+    while (password == ""):
+        password = input("Please enter the password to your local MySQL database: ");
+        print("You entered: " + password);
+
+    while (host == ""):
+        host = input("Please enter the host to your local MySQL database (commonly `localhost`): ");
+        print("You entered: " + host);
+
+    while (databaseName == ""):
+        databaseName = input("Please enter the name of the database you want to use (commonly CBS): ");
+        print("You entered: " + databaseName);
+
+    try:
+        global mydb;
+        mydb = mysql.connector.connect(
+            user=user,
+            password=password,
+            host=host,
+            database=databaseName
+        );
+        global dbCursor;
+        dbCursor = mydb.cursor();
+    except mysql.connector.errors.DatabaseError as db:
+        print("Error connecting to database. Please View The Error Message and Try Again.");
+        print(db);
+        SeperatingLine();
+        # Have user try to login again
+        StartDBConnection();
+
+    assert (dbCursor is not None), "auto-tests: Database connection is null";
+
+    RefreshTests();
 
 
 def main():
@@ -284,3 +284,8 @@ def main():
     mydb.close();
     print("auto-tests successfully completed.")
     print("Closed auto-tests connection.")
+
+
+# Execute `main()` function
+if __name__ == '__main__':
+    main()
