@@ -6,13 +6,6 @@ from Employee import EmployeeInterface;
 from Passenger import PassengerInterface;
 from CommonFunctions import *;
 
-# def EndProgram():
-#     SeparatingLine()
-#     CloseConnection();
-#     print("Successfully disconnected from database.");
-#     print("Thank you for using the Complete Bus System. Goodbye!");
-#     exit(0);
-
 
 # Welcomes the user and lets them select their level of access
 def WelcomeUser():
