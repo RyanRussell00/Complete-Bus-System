@@ -149,7 +149,6 @@ def EmployeeQueries():
         choice = input("Please enter a command: ").upper();
 
     query = "";
-    print(choice);
     if (choice == "I"):
         # ToDo: Test the query
         # Join the employee table and the address table to get the full employee's information
@@ -165,12 +164,12 @@ def EmployeeQueries():
     elif (choice == "B"):
         # ToDo: Test the query
         # Gets all busses that the employee is assigned to
-        query = SELECT_QUERY % ("busName", "BUS", "E_driver = " + ssn);
+        query = SELECT_QUERY % ("busID", "BUS", "E_driver = " + ssn);
     elif (choice == "R"):
         # ToDo: Test the query
         # Gets all routes that the employee is assigned to
         query = SELECT_EMPL_ROUTE_QUERY % (
-            "R_routeID, timeStart, timeEnd", "SCHEDULED", "B_busID", "busID", "BUS", "E_driver = " + ssn);
+            "R_routeID, R_routeName, timeStart, timeEnd", "SCHEDULED", "B_busID", "busID", "BUS", "E_driver = " + ssn);
     elif (choice == "X"):
         EndProgram();
     # No valid input, restart the prompts
