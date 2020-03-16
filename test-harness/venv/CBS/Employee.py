@@ -10,7 +10,7 @@ SELECT_ALL_QUERY = "SELECT %s FROM %s"
 NEW_EMPLOYEE_INSERT = "INSERT INTO EMPLOYEE (ssn, Fname, Minit, Lname, startDate, supervisor) VALUES (%s)"
 SELECT_EMPL_ROUTE_QUERY = "SELECT %s FROM %s WHERE %s IN (SELECT %s FROM %s WHERE %s)"
 SELECT_EMPL_SCHEDULE = "SELECT %s FROM %s WHERE % (SELECT %s FROM %s WHERE %s)"
-ADDRESS_INSERT = "INSERT INTO ADDRESS (E_ssn, street, city, state, zip) VALUES (%s, %s, %s, %s, %s)"
+ADDRESS_INSERT = "INSERT INTO ADDRESS (E_ssn, street, city, state, zip) VALUES (%s, '%s', '%s', '%s', '%s')"
 
 
 # ------------------#
