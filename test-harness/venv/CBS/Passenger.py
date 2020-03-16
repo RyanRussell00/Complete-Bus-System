@@ -32,7 +32,6 @@ def GetCardInfo():
             except ValueError:
                 print("Please enter a valid card number with 9 digits.")
                 cardNum = "";
-                # continue;
         else:
             cardNum = "";
 
@@ -48,7 +47,7 @@ def GetCardInfo():
     return cardNum;
 
 
-# ToDo: Test
+# Reloads the balance on the card
 def ReloadCard(cardNum):
     balance = "";
     while (balance == ""):
@@ -79,7 +78,6 @@ def ReloadCard(cardNum):
     return True;
 
 
-# ToDo: Test
 # Pushes the expiry date of the card back by 2 years
 def RenewCard(cardNum):
     currQuery = GET_CARD_DATE_QUERY % (cardNum);
@@ -110,7 +108,7 @@ def RenewCard(cardNum):
         print("Something went wrong getting the current expiry date.");
 
 
-# ToDo: Test
+# Update the card balance or expiry date
 def UpdateCard():
     cardNum = GetCardInfo();
     if (cardNum == ""):
@@ -133,6 +131,7 @@ def UpdateCard():
             RenewCard(cardNum);
 
 
+# Gets a selected fare tier
 def GetFareTier():
     status = "";
     while (status == ""):
@@ -160,6 +159,7 @@ def GetFareTier():
     return str(status);
 
 
+# Creates a new passenger
 def NewPassenger():
     SeparatingLine();
     # Dictionary (map) for employee's information
@@ -216,7 +216,6 @@ def NewPassenger():
         newValues = newValues[:-2];
 
     query = (NEW_CARD_QUERY % (newValues));
-    # print(query);
 
     result = SubmitInsert(query);
     # global variable accessible anywhere to get Employee's name
@@ -250,7 +249,7 @@ def CardHistory():
     return True;
 
 
-# Actions for employees
+# Actions for passsenger
 def PassengerInterface():
     selection = "";
     while (selection != "X"):

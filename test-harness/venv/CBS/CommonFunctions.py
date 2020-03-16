@@ -37,10 +37,8 @@ def SeparatingLine():
 # Use Case: I want to know at what time the 535 Lynnwood will be at each of its stops on March 15 2020
 # This function is left in this file because it's used by both Employees and Passengers
 # ToDo: This entire function once we have finalized the creates.
-# ToDo: Test this function
 def CheckSchedule():
     SeparatingLine();
-    # ToDo: Queries for getting all stops on a route and what times the bus is supposed to stop at the stops on a day.
 
     # Dictionary (map) to receive multiple inputs from user
     reqDict = {"Route Number (3 digits)": "",
