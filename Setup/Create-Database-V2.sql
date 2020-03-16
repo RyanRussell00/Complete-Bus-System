@@ -33,7 +33,11 @@ CREATE TABLE ADDRESS (
     zip CHAR(5) NOT NULL,
     PRIMARY KEY (E_ssn),
     CONSTRAINT address_ssn FOREIGN KEY (E_ssn)
-        REFERENCES EMPLOYEE (ssn) ON DELETE CASCADE ON UPDATE CASCADE
+        REFERENCES EMPLOYEE (ssn) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT ValidStates CHECK(state IN('AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS',
+                     'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY',
+                     'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV',
+                     'WI', 'WY'))
 );
 
 CREATE TABLE BUS (
@@ -109,8 +113,8 @@ CREATE TABLE SCHEDULED (
     R_routeID INT(3) NOT NULL,
     R_routeName VARCHAR(20) NOT NULL,
     B_busID INT(5),
-    timeStart TIME,
-    timeEnd TIME,
+    timeStart DATETIME,
+    timeEnd DATETIME,
     PRIMARY KEY (R_routeID, R_routeName, B_busID),
     CONSTRAINT scheduled_routeID FOREIGN KEY (R_routeID)
         REFERENCES ROUTE (routeID) ON DELETE CASCADE ON UPDATE CASCADE,
