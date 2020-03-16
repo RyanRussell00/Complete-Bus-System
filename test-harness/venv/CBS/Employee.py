@@ -68,6 +68,7 @@ def SetCurrentEmployee():
     if (ssn == "" or name == ""):
         print("Error: SSN or Name is empty.")
         return False;
+    return True;
 
 
 # ToDo
@@ -91,6 +92,8 @@ def EmployeeQueries():
     if (choice == "I"):
         # ToDo: Test the query
         # Join the employee table and the address table to get the full employee's information
+        #print(ssn + "\n");
+
         query = (SELECT_QUERY % ("*", "EMPLOYEE AS E, ADDRESS AS A", "E.ssn = " + ssn + " AND A.E_ssn = " + ssn));
 
         # query = SELECT_ALL_QUERY % ("*", "EMPLOYEE");
@@ -301,6 +304,12 @@ def NewEmployee():
         SetAddress(ssn);
     return True;
 
+def UpdateAddress():
+    SeparatingLine();
+    ssn = input("Employee SSN: ");
+
+
+
 
 # ToDo: Test
 # Actions for employees
@@ -313,6 +322,7 @@ def EmployeeInterface():
         print("Add a new Employee: N \n"
               "Access an Employee's schedule: S \n"
               "Check route schedule for a given day: C \n"
+              "Update Employee address: A \n"
               "Exit Program: X");
         selection = input("Please enter a command: ")
         selection = selection.upper();
@@ -325,4 +335,6 @@ def EmployeeInterface():
         elif (selection == "C"):
             # ToDo
             CheckSchedule();
+        elif (selection == "A"):
+            UpdateAddress();
     EndProgram();
