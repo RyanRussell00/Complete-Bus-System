@@ -9,7 +9,7 @@ GET_CARD_QUERY = "SELECT cardNum, balance, expiry_date, F.fareName FROM CARD AS 
 GET_CARD_DATE_QUERY = "SELECT expiry_date FROM CARD WHERE cardNum = %s";
 RELOAD_CARD_UPDATE = "UPDATE CARD SET balance = %s WHERE cardNum = %s";
 RENEW_CARD_UPDATE = "UPDATE CARD SET expiry_date = '%s' WHERE cardNum = %s";
-# ToDo: This query
+# Gets the history of a Passenger's card
 GET_HISTORY_QUERY = "SELECT sc.R_routeID, sc.R_routeName, t.time_stamp, f.cost FROM FARE_TIER f, CARD c, TAPS t, " \
                     "SCHEDULED sc WHERE c.cardNum = %s AND t.C_cardNum = c.cardNum AND c.F_fare = f.tier AND t.B_busID = sc.B_busID " \
                     "AND t.time_stamp >= sc.timeStart AND t.time_stamp <= sc.timeEnd ORDER BY t.time_stamp ASC";

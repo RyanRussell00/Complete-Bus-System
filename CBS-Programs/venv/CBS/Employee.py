@@ -13,6 +13,7 @@ ADDRESS_INSERT_UPDATE = "INSERT INTO ADDRESS (E_ssn, street, city, state, zip) V
                         "ON DUPLICATE KEY UPDATE street = '%s', city = '%s', state = '%s', zip = '%s';"
 EMPLOYEE_INFORMATION_QUERY = "SELECT * FROM EMPLOYEE AS E LEFT JOIN ADDRESS AS A ON E.ssn = A.E_ssn WHERE E.ssn = %s";
 # Semicolon left out intentionally
+# I have an employee on a bus and they want to know what their stop order is
 VISIT_QUERY = "SELECT v.arrivalTime, v.S_stopID FROM VISITS v, ROUTE r WHERE v.R_routeID = r.routeID AND r.routeID = %s" \
               " AND r.routeName = '%s' AND v.typeOfDay = '%s' ORDER BY v.arrivalTime ASC";
 
