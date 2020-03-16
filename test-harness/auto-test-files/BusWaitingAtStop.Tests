@@ -57,7 +57,10 @@ VALUES
 	(002, 'Bellevue', 33333, '2020-03-10 08:00:00', '2020-03-10 11:00:00'),
 	(002, 'Bellevue', 44444, '2020-03-10 11:30:00', '2020-03-10 16:00:00');
 
-SELECT b.busId, DATE(sc.timeStart), v.arrivalTime, v.departTime
+SELECT
+	b.busID,
+	TIMESTAMP(DATE(sc.timeStart), v.arrivalTime),
+	TIMESTAMP(DATE(sc.timeStart), v.departTime)
 FROM BUS b, VISITS v, SCHEDULED sc
 WHERE v.typeOfDay = 'Weekday'
 	AND sc.B_busID = b.busID
@@ -65,7 +68,7 @@ WHERE v.typeOfDay = 'Weekday'
 	AND sc.R_routeName = v.R_routeName
 	AND TIME(sc.timeStart) <= v.arrivalTime
 	AND TIME(sc.timeEnd) >= v.departTime
-ORDER BY b.busID ASC, v.arrivalTime ASC;
+ORDER BY b.busID ASC, TIMESTAMP(sc.timeStart, v.arrivalTime) ASC;
 
 DELETE FROM VISITS;
 DELETE FROM ROUTE;

@@ -13,9 +13,9 @@
 # DateTime: USE THIS FORMAT EXACTLY: datetime.date(YYYY, (M)M, (D)D) #Do not put 0 in front of single digit Month or Day
 # Parentheses around expected output is optional
 
-22222, datetime.date(2020, 3, 10), datetime.time(12, 0, 0), datetime.time(12, 5, 0)
-22222, datetime.date(2020, 3, 10), datetime.time(12, 6, 0), datetime.time(12, 9, 0)
-22222, datetime.date(2020, 3, 10), datetime.time(12, 10, 0), datetime.time(12, 15, 0)
-22222, datetime.date(2020, 3, 10), datetime.time(12, 16, 0), datetime.time(12, 19, 0)
-44444, datetime.date(2020, 3, 10), datetime.time(12, 0, 0), datetime.time(12, 5, 0)
-44444, datetime.date(2020, 3, 10), datetime.time(12, 6, 0), datetime.time(12, 10, 0)
+22222, datetime.datetime(2020, 3, 10, 12, 0, 0), datetime.datetime(2020, 3, 10, 12, 5, 0)
+22222, datetime.datetime(2020, 3, 10, 12, 6, 0), datetime.datetime(2020, 3, 10, 12, 9, 0)
+22222, datetime.datetime(2020, 3, 10, 12, 10, 0), datetime.datetime(2020, 3, 10, 12, 15, 0)
+22222, datetime.datetime(2020, 3, 10, 12, 16, 0), datetime.datetime(2020, 3, 10, 12, 19, 0)
+44444, datetime.datetime(2020, 3, 10, 12, 0, 0), datetime.datetime(2020, 3, 10, 12, 5, 0)
+44444, datetime.datetime(2020, 3, 10, 12, 6, 0), datetime.datetime(2020, 3, 10, 12, 10, 0)
