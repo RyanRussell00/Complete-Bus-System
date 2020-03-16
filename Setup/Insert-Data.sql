@@ -1,3 +1,12 @@
+# Test for all ON DELETE and ON CASCADE functions
+
+# Test all constraints
+
+# Just test it all fam
+
+
+
+
 -- USE CBS; 
 
 -- -- Delete all data from EMPLOYEE before inserting
