@@ -22,7 +22,7 @@ CREATE TABLE EMPLOYEE (
     supervisor INT(9),
     PRIMARY KEY (ssn),
     FOREIGN KEY (supervisor)
-        REFERENCES EMPLOYEE (ssn)
+        REFERENCES EMPLOYEE (ssn) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE ADDRESS (
@@ -33,22 +33,22 @@ CREATE TABLE ADDRESS (
     zip CHAR(5) NOT NULL,
     PRIMARY KEY (E_ssn),
     CONSTRAINT address_ssn FOREIGN KEY (E_ssn)
-        REFERENCES EMPLOYEE (ssn)
+        REFERENCES EMPLOYEE (ssn) ON DELETE CASCADE ON UPDATE CASCADE
+
 );
 
 CREATE TABLE BUS (
     busID INT(5) NOT NULL,
-    busName VARCHAR(20) NOT NULL,
     capacity INT(3) DEFAULT 1,
     manufactured_date DATE,
     E_driver INT(9) UNIQUE DEFAULT NULL,
     PRIMARY KEY (busID),
     FOREIGN KEY (E_driver)
-        REFERENCES EMPLOYEE (ssn)
+        REFERENCES EMPLOYEE (ssn) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE TABLE FARE_TIER (
     tier INT(2) NOT NULL,
-    cost FLOAT(4 , 2 ) NOT NULL,
+    cost FLOAT(4 , 2) NOT NULL,
     fareName VARCHAR(9) DEFAULT NULL,
     PRIMARY KEY (tier)
 );
@@ -59,7 +59,7 @@ CREATE TABLE CARD (
     F_fare INT(2) NOT NULL,
     PRIMARY KEY (cardNum),
     CONSTRAINT card_fare FOREIGN KEY (F_fare)
-        REFERENCES FARE_TIER (tier)
+        REFERENCES FARE_TIER (tier) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE TABLE TAPS (
     B_busID INT(5) NOT NULL,
@@ -67,46 +67,55 @@ CREATE TABLE TAPS (
     time_stamp DATETIME NOT NULL,
     PRIMARY KEY (B_busID , C_cardNum , time_stamp),
     CONSTRAINT tap_bus FOREIGN KEY (B_busID)
-        REFERENCES BUS (busID),
+        REFERENCES BUS (busID) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT tap_card FOREIGN KEY (C_cardNum)
-        REFERENCES CARD (cardNum)
+        REFERENCES CARD (cardNum) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE TABLE BUS_STOP (
     stopID INT(6) NOT NULL,
-    stopName VARCHAR(20) NOT NULL,
     street1 VARCHAR(20) NOT NULL,
     street2 VARCHAR(20) DEFAULT NULL,
     PRIMARY KEY (stopID)
 );
 CREATE TABLE ROUTE (
-    routeID INT(6) NOT NULL,
+    routeID INT(3) NOT NULL,
+    routeName VARCHAR(20) NOT NULL,
     S_firstStop INT(6) NOT NULL,
     S_lastStop INT(6) NOT NULL,
-    PRIMARY KEY (routeID),
+    KEY (routeName),
+    PRIMARY KEY (routeID, routeName),
     CONSTRAINT route_firstStop FOREIGN KEY (S_firstStop)
-        REFERENCES BUS_STOP (stopId),
+        REFERENCES BUS_STOP (stopID) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT route_lastStop FOREIGN KEY (S_lastStop)
-        REFERENCES BUS_STOP (stopId)
+        REFERENCES BUS_STOP (stopID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE TABLE VISITS (
-    R_routeID INT(6) NOT NULL,
+    R_routeID INT(3) NOT NULL,
+	R_routeName VARCHAR(20) NOT NULL,
     S_stopID INT(6) NOT NULL,
+	typeOfDay VARCHAR(10) NOT NULL DEFAULT 'Weekday',
     arrivalTime TIME NOT NULL,
     departTime TIME NOT NULL,
-    PRIMARY KEY (R_routeID),
+    PRIMARY KEY (R_routeID, S_stopID, typeOfDay),
     CONSTRAINT visit_routeID FOREIGN KEY (R_routeID)
-        REFERENCES ROUTE (routeID),
+        REFERENCES ROUTE (routeID) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT visit_routeName FOREIGN KEY (R_routeName)
+        REFERENCES ROUTE (routeName) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT visit_stopID FOREIGN KEY (S_stopID)
-        REFERENCES BUS_STOP (stopID)
+        REFERENCES BUS_STOP (stopID) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT dayTypes CHECK(typeOfDay IN('Weekday', 'Weekend', 'Holiday', 'Snow'))
 );
 CREATE TABLE SCHEDULED (
-    R_routeID INT(6) NOT NULL,
+    R_routeID INT(3) NOT NULL,
+	R_routeName VARCHAR(20) NOT NULL,
     B_busID INT(5),
     timeStart TIME,
     timeEnd TIME,
-    PRIMARY KEY (R_routeID , B_busID),
+    PRIMARY KEY (R_routeID, R_routeName, B_busID),
     CONSTRAINT scheduled_routeID FOREIGN KEY (R_routeID)
-        REFERENCES ROUTE (routeID),
+        REFERENCES ROUTE (routeID) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT scheduled_routeName FOREIGN KEY (R_routeName)
+        REFERENCES ROUTE (routeName) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT scheduled_busID FOREIGN KEY (B_busID)
-        REFERENCES BUS (busID)
+        REFERENCES BUS (busID) ON DELETE CASCADE ON UPDATE CASCADE
 );

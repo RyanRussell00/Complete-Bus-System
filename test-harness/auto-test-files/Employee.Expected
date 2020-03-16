@@ -13,6 +13,3 @@
 # DateTime: USE THIS FORMAT EXACTLY: datetime.date(YYYY, (M)M, (D)D) #Do not put 0 in front of single digit Month or Day
 # For NULL values write: None
 # Parentheses around expected output is optional
-
-123456789, 'Joe', '', 'Swanson', datetime.date(2020, 2, 4), None
-123456789
