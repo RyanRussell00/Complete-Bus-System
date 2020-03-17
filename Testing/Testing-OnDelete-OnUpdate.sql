@@ -15,25 +15,24 @@
 -- SELECT * FROM EMPLOYEE;
 
 
--- Testing on delete and on cascade of address E_ssn
+-- Testing ON DELETE CASCADE of address E_ssn
 -- If E_ssn of address is removed, then remove the addresss
+SELECT * FROM EMPLOYEE;
+SELECT * FROM ADDRESS;
+DELETE FROM EMPLOYEE
+WHERE ssn = 123456789;
+SELECT * FROM EMPLOYEE;
+SELECT * FROM ADDRESS;
 
--- SELECT * FROM EMPLOYEE;
--- SELECT * FROM ADDRESS;
--- DELETE FROM EMPLOYEE
--- WHERE ssn = 123456789;
--- SELECT * FROM EMPLOYEE;
--- SELECT * FROM ADDRESS;
-
+-- Testing ON UPDATE CASCADE
 -- If E_ssn of address is changed, then change the ssn address
-
--- SELECT * FROM EMPLOYEE;
--- SELECT * FROM ADDRESS;
--- UPDATE EMPLOYEE
--- SET ssn = 999999999
--- WHERE ssn = 112233445;
--- SELECT * FROM EMPLOYEE;
--- SELECT * FROM ADDRESS;
+SELECT * FROM EMPLOYEE;
+SELECT * FROM ADDRESS;
+UPDATE EMPLOYEE
+SET ssn = 999999999
+WHERE ssn = 112233445;
+SELECT * FROM EMPLOYEE;
+SELECT * FROM ADDRESS;
 
 -- Testing on delete and on cascade of address bus
 -- If E_driver is removed, then set the bus employee to null
