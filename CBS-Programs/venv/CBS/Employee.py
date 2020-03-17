@@ -59,7 +59,6 @@ def CheckSchedule():
     if (len(allValues) != 3):
         print("Something went wrong with inputting data.");
         return False;
-    # ToDo: Query
     query = VISIT_QUERY % (allValues[0], allValues[1], allValues[2]);
     print(query);
 
@@ -139,8 +138,6 @@ def EmployeeQueries():
         print("Error trying to get employee. Please contact your system administrator.");
 
     SeparatingLine();
-    print("Selected Employee: " + name);
-    # ToDo: Code the use cases for the Employees
     choice = "";
     while (choice == ""):
         print("Get Employee's information: I \n"
@@ -151,7 +148,6 @@ def EmployeeQueries():
 
     query = "";
     if (choice == "I"):
-        # ToDo: Test the query
         # Join the employee table and the address table to get the full employee's information
         # print(ssn + "\n");
 
@@ -163,11 +159,9 @@ def EmployeeQueries():
         # addressQuery = SELECT_QUERY % ("*", "ADDRESS", "E_ssn = " + ssn);
 
     elif (choice == "B"):
-        # ToDo: Test the query
         # Gets all busses that the employee is assigned to
         query = SELECT_QUERY % ("busID", "BUS", "E_driver = " + ssn);
     elif (choice == "R"):
-        # ToDo: Test the query
         # Gets all routes that the employee is assigned to
         query = SELECT_EMPL_ROUTE_QUERY % (
             "R_routeID, R_routeName, timeStart, timeEnd", "SCHEDULED", "B_busID", "busID", "BUS", "E_driver = " + ssn);
@@ -393,13 +387,10 @@ def EmployeeInterface():
         selection = input("Please enter a command: ")
         selection = selection.upper();
         if (selection == "N"):
-            #     ToDo
             NewEmployee();
         elif (selection == "I"):
-            # ToDo
             EmployeeQueries();
         elif (selection == "C"):
-            # ToDo
             CheckSchedule();
         elif (selection == "A"):
             UpdateAddress();
